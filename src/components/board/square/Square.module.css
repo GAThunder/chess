@@ -1,0 +1,27 @@
+.black {
+    height: 70px;
+    width: 70px;
+    background-color: #769656;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.white {
+    height: 70px;
+    width: 70px;
+    background-color: #eeeed2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.white:hover {
+    box-sizing: border-box;
+    border: 4px solid crimson;
+}
+
+.black:hover {
+    box-sizing: border-box;
+    border: 4px solid crimson;
+}
