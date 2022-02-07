@@ -84,15 +84,6 @@ function Square(props) {
       break;
   }
  }) 
-
- /*const selectPiece = () => {
-   if(pieceName) {
-   console.log(pieceName);
-   }
-   console.log(props.position);
- }*/
-
-
      
   return <div 
   onClick={() => props.selectPiece(pieceName, props.position, props.index)}
