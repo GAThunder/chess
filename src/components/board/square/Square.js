@@ -83,13 +83,13 @@ function Square(props) {
       default :
       break;
   }
- }) 
+ }, [props.piece]) 
      
-  return <div 
+  return <div key={props.piece}
   onClick={() => props.selectPiece(pieceName, props.position, props.index)}
   className={(props.number % 2 === 0) ? classes.white : classes.black}
         >
-          {props.piece != null && <img src={pieceURL} alt={pieceName} number={props.number}/>}
+          {props.piece != '' && <img src={pieceURL} alt={pieceName} number={props.number}/>}
         </div>;
 }
 
