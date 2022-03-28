@@ -5,7 +5,7 @@ import Square from './square/Square';
 function Board(props) {
 
 
-    const fen = props.fen.split('/');
+    const [fen, setFen] = useState(props.fen.split('/'));
     const xAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
 
@@ -13,7 +13,7 @@ function Board(props) {
 
     let startingSquares = []
 
-    for (let y = 0; y < fen.length; y++) {
+    for (let y = 0; y < fen.length; y++) { //this sets the initial FEN, and loads it all into a dummy array, before setting the state, so it doesn't load endlessly
         for (let x = 0; x < fen[y].length; x++) {
 
             if (Number(fen[y][x])) {
