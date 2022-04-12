@@ -84,10 +84,13 @@ function Square(props) {
       break;
   }
  }, [props.piece]) 
+
+ let backgroundColor = null;
+ if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
      
   return <div key={props.piece}
   onClick={() => props.selectPiece(pieceName, props.position, props.index)}
-  className={(props.number % 2 === 0) ? classes.white : classes.black}
+  className={backgroundColor}
         >
           {props.piece != '' && <img src={pieceURL} alt={pieceName} number={props.number}/>}
         </div>;
