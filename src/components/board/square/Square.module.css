@@ -16,7 +16,16 @@
     align-content: center;
 }
 
-.white:hover {
+.highlighted {
+    height: 70px;
+    width: 70px;
+    background-color: #baca44;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+/* .white:hover {
     box-sizing: border-box;
     border: 4px solid crimson;
 }
@@ -24,4 +33,4 @@
 .black:hover {
     box-sizing: border-box;
     border: 4px solid crimson;
-}
+} */
