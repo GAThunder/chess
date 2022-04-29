@@ -16,14 +16,29 @@
     align-content: center;
 }
 
-.highlighted {
+.highlightedBlack {
     height: 70px;
     width: 70px;
-    background-color: #baca44;
+    background-color: #769656;
+    background-image: radial-gradient(#bbb 20%, transparent 20%),
+      radial-gradient(#fafafa 20%, transparent 20%);
     display: flex;
     justify-content: center;
     align-content: center;
 }
+
+.highlightedWhite {
+    height: 70px;
+    width: 70px;
+    background-color: #eeeed2;
+    background-image: radial-gradient(#bbb 20%, transparent 20%),
+      radial-gradient(#fafafa 20%, transparent 20%);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
 
 /* .white:hover {
     box-sizing: border-box;
