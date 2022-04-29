@@ -86,8 +86,18 @@ function Square(props) {
  }, [props.piece]) 
 
  let backgroundColor = null;
- if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
+ //if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
      
+ switch (props.highlighted) {
+   case true: 
+   (props.number % 2 === 0) && (props.piece == '') ? backgroundColor = classes.highlightedWhite : backgroundColor = classes.highlightedBlack;
+   break;
+
+   case false: 
+   (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
+   break;
+ }
+
   return <div key={props.piece}
   onClick={() => props.selectPiece(pieceName, props.position, props.index)}
   className={backgroundColor}
