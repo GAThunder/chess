@@ -3,7 +3,8 @@ import classes from './Board.module.css'
 import Square from './square/Square';
 
 function Board(props) {
-    return <div className={classes.Board}>   
+    return <div className={classes.Board}
+            key={props.FEN}>   
         {props.squares.map((square, index) => <Square
         selectPiece={props.selectPiece}
         index={index}
