@@ -1,8 +1,41 @@
 .Chess {
     height: 100%;
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: slategray;
+    margin: auto;
+}
+
+.FEN_display {
+    top: 0;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+}
+
+p {
+    font-weight: bold;
+}
+
+.Input_Line {
+    width: 100%
+}
+
+button {
+    border: none;
+    margin-top: .5em;
+    width: 6em;
+    height: 2em;
+    border-radius: 5px;
 }
