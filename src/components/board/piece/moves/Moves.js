@@ -644,4 +644,49 @@ function PawnMoveDown(squares, index, count, maxDepth, potentialMoves) {
     return -1;
 }
 
-export { MoveUp, MoveDown, MoveRight, MoveLeft, MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight, PawnTake, PawnMoveUp, PawnMoveDown, MovePiece, PotentialMoves }
+function PotentialEnPassant(squares, index, selectedPiece, newFenArray) {
+    console.log(index, selectedPiece);
+    if (squares[selectedPiece].piece.pieceType == 'P') {
+        if (selectedPiece - index === 16) {
+            if (squares[index].position[0] !== 'H') {
+                if (squares[index + 1].piece.pieceType == 'p') {
+                    newFenArray[3] = squares[index + 8].position;
+                    squares[index].piece.potentialPassant = true;
+                }
+            }
+            if (squares[index].position[0] !== 'A') {
+                if (squares[index - 1].piece.pieceType == 'p') {
+                    newFenArray[3] = squares[index + 8].position;
+                    squares[index].piece.potentialPassant = true;
+                }
+            }
+
+        }
+    }
+
+    if (squares[selectedPiece].piece.pieceType == 'p') {
+        if (selectedPiece - index === -16) {
+            if (squares[index].position[0] !== 'H') {
+                if (squares[index + 1].piece.pieceType == 'P') {
+                    newFenArray[3] = squares[index - 8].position;
+                    squares[index].piece.potentialPassant = true;
+                }
+            }
+            if (squares[index].position[0] !== 'A') {
+                if (squares[index - 1].piece.pieceType == 'P') {
+                    newFenArray[3] = squares[index - 8].position;
+                    squares[index].piece.potentialPassant = true;
+                }
+            }
+
+        }
+    }
+
+}
+
+export {
+    MoveUp, MoveDown, MoveRight, MoveLeft,
+    MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight,
+    PawnTake, PawnMoveUp, PawnMoveDown, MovePiece,
+    PotentialEnPassant, PotentialMoves
+}

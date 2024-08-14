@@ -3,7 +3,7 @@ import Board from '../board/Board';
 import classes from './Chess.module.css';
 import Piece from '../board/piece/Piece.js';
 import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
-import { PotentialMoves, MovePiece } from '../board/piece/moves/Moves.js';
+import { PotentialMoves, MovePiece, PotentialEnPassant } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
 import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
 
@@ -61,8 +61,6 @@ function Chess() {
     }
   }
 
-
-
   const [squares, setSquares] = useState([...startingSquares]);
   // need 2 paths in the function, depending on if a piece is selected. 
   //The first should select the piece, and highlight valid moves, if not a valid piece, alert the player
@@ -96,11 +94,13 @@ function Chess() {
     else if (selectedPiece !== -1) {
       // executes a valid move as long as its not the piece already selected
       if (newSquares[index].highlighted === true && index !== selectedPiece) {
+        let newFenArray = fen;
+        newFenArray[3] = '-'; //reset en passant FEN
+        PotentialEnPassant(newSquares, index, selectedPiece, newFenArray);
         UnHighlightPieces(newSquares);
         MovePiece(newSquares, index, selectedPiece);
         setSquares(newSquares);
         setSelectedPiece(-1);
-        let newFenArray = fen;
         newFenArray[0] = GetCurrentFen(newSquares);
         UpdateTurn(newFenArray);
         setFen(newFenArray);
