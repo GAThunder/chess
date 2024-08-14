@@ -105,6 +105,12 @@ function PotentialMoves(squares, index) {
     return potentialMoves;
 }
 
+function MovePiece(newSquares, index, selectedPiece) {
+    newSquares[index].piece.pieceType = newSquares[selectedPiece].piece.pieceType;
+    newSquares[index].piece.hasMoved = true;
+    newSquares[selectedPiece].piece.pieceType = '';
+}
+
 //Update to return indexes instead of updating the squares in here, have it pass a number as well, and be recursive, while the conditions aren't met, keep going, so rooks and bishops will get full set
 
 function MoveUp(squares, index, count, maxDepth, potentialMoves) {
@@ -638,4 +644,4 @@ function PawnMoveDown(squares, index, count, maxDepth, potentialMoves) {
     return -1;
 }
 
-export { MoveUp, MoveDown, MoveRight, MoveLeft, MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight, PawnTake, PawnMoveUp, PawnMoveDown, PotentialMoves }
+export { MoveUp, MoveDown, MoveRight, MoveLeft, MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight, PawnTake, PawnMoveUp, PawnMoveDown, MovePiece, PotentialMoves }

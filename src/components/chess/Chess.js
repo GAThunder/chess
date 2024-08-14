@@ -3,7 +3,9 @@ import Board from '../board/Board';
 import classes from './Chess.module.css';
 import Piece from '../board/piece/Piece.js';
 import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
-import { PotentialMoves } from '../board/piece/moves/Moves.js';
+import { PotentialMoves, MovePiece } from '../board/piece/moves/Moves.js';
+import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
+import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
 
 function Chess() {
   const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQkq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
@@ -18,7 +20,6 @@ function Chess() {
 
   const [selectedPiece, setSelectedPiece] = useState(-1); // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
-  const [potentialMoves, setPotentialMoves] = useState([]); //going to fill this with potential moves that can be used in the second part of selectPiece
 
   for (let y = 0; y < fenPiecePosition.length; y++) { //this sets the initial FEN, and loads it all into a dummy array, before setting the state, so it doesn't load endlessly
     for (let x = 0; x < fenPiecePosition[y].length; x++) {
@@ -76,8 +77,6 @@ function Chess() {
       turn = "Black";
     }
     const colorPiece = pieceName.split(' '); //colorPiece is an array. 0 is the color, 1 is the piece
-    console.log(index);
-
     let potentialMoves = [];
     if (selectedPiece === -1) {
 
@@ -86,9 +85,7 @@ function Chess() {
         setSelectedPiece(index);
         newSquares[index].highlighted = true;
         potentialMoves = PotentialMoves(newSquares, index);
-        potentialMoves.forEach((index) => {
-          newSquares[index].highlighted = true;
-        })
+        HighlightPieces(potentialMoves, newSquares);
         setSquares(newSquares);
       }
       else {
@@ -99,36 +96,23 @@ function Chess() {
     else if (selectedPiece !== -1) {
       // executes a valid move as long as its not the piece already selected
       if (newSquares[index].highlighted === true && index !== selectedPiece) {
-        newSquares.forEach((square) => {
-            square.highlighted = false; 
-        })
-        newSquares[index].piece.pieceType = newSquares[selectedPiece].piece.pieceType;
-        newSquares[index].piece.hasMoved = true;
-        newSquares[selectedPiece].piece.pieceType = '';
+        UnHighlightPieces(newSquares);
+        MovePiece(newSquares, index, selectedPiece);
         setSquares(newSquares);
         setSelectedPiece(-1);
         let newFenArray = fen;
         newFenArray[0] = GetCurrentFen(newSquares);
-        if (newFenArray[1] == 'w') {
-          newFenArray[1] = 'b';
-        }
-        else {
-          newFenArray[1] ='w';
-        }
+        UpdateTurn(newFenArray);
         setFen(newFenArray);
       }
 
       else if (turn == colorPiece[0]) {
         //changes the selected piece to a different selected piece
-        newSquares.forEach((square) => {
-          square.highlighted = false; 
-      })
+        UnHighlightPieces(newSquares);
         potentialMoves = PotentialMoves(newSquares, index);
-        potentialMoves.forEach((index) => {
-          newSquares[index].highlighted = !newSquares[index].highlighted;
-        })
+        HighlightPieces(potentialMoves, newSquares);
         setSelectedPiece(index);
-        newSquares[index].highlighted = !newSquares[index].highlighted;
+        newSquares[index].highlighted = true;
         setSquares(newSquares);
       }
 
@@ -144,10 +128,10 @@ function Chess() {
   }
 
   const submitFEN = () => { // maybe use effect to stop double load
-    var newFenArray = fen;
+    let newFenArray = fen;
     newFenArray[0] = changedFEN;
     setFen(newFenArray);
-    var updatedSquares = [...startingSquares]
+    let updatedSquares = [...startingSquares]
     setSquares(updatedSquares);
   }
 
