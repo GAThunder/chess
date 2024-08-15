@@ -1,4 +1,6 @@
-function PotentialMoves(squares, index) {
+import { ResetPassant } from "../../../Utilities/ResetPassant/ResetPassant";
+
+function PotentialMoves(squares, index,) {
     let potentialMoves = [];
     switch (squares[index].piece.pieceType) {
         case 'P':
@@ -105,7 +107,22 @@ function PotentialMoves(squares, index) {
     return potentialMoves;
 }
 
-function MovePiece(newSquares, index, selectedPiece) {
+function MovePiece(newSquares, index, selectedPiece, newFenArray) {
+    let FenPassant = newFenArray[3];
+    if (FenPassant !== '-') {
+        if (newSquares[selectedPiece].piece.pieceType == 'p') {
+            if (newSquares[index].position === FenPassant) {
+                newSquares[index - 8].piece.pieceType = '';
+            }
+        }
+        if (newSquares[selectedPiece].piece.pieceType == 'P') {
+            if (newSquares[index].position === FenPassant) {
+                newSquares[index + 8].piece.pieceType = '';
+            }
+        }
+    }
+    ResetPassant(newSquares, newFenArray)
+    PotentialEnPassant(newSquares, index, selectedPiece, newFenArray);
     newSquares[index].piece.pieceType = newSquares[selectedPiece].piece.pieceType;
     newSquares[index].piece.hasMoved = true;
     newSquares[selectedPiece].piece.pieceType = '';
@@ -125,8 +142,7 @@ function MoveUp(squares, index, count, maxDepth, potentialMoves) {
                     MoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves);
                 }
                 else if (!isUpperCase(updatedSquares[index - 8].piece.pieceType)) {
-                    potentialMoves.push(index - 8);
-                    MoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves);
+                    potentialMoves.push(index - 8);                    
                 }
             }
             else {
@@ -136,7 +152,6 @@ function MoveUp(squares, index, count, maxDepth, potentialMoves) {
                 }
                 else if (isUpperCase(updatedSquares[index - 8].piece.pieceType)) {
                     potentialMoves.push(index - 8);
-                    MoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves);
                 }
             }
         }
@@ -157,7 +172,6 @@ function MoveDown(squares, index, count, maxDepth, potentialMoves) {
                 }
                 else if (!isUpperCase(updatedSquares[index + 8].piece.pieceType)) {
                     potentialMoves.push(index + 8);
-                    MoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves);
                 }
             }
             else {
@@ -167,7 +181,6 @@ function MoveDown(squares, index, count, maxDepth, potentialMoves) {
                 }
                 else if (isUpperCase(updatedSquares[index + 8].piece.pieceType)) {
                     potentialMoves.push(index + 8);
-                    MoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves);
                 }
             }
         }
@@ -190,7 +203,6 @@ function MoveRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (!isUpperCase(updatedSquares[index + 1].piece.pieceType)) {
                         potentialMoves.push(index + 1);
-                        MoveRight(squares, index + 1, count + 1, maxDepth, potentialMoves);
                     }
                 }
                 else {
@@ -200,7 +212,6 @@ function MoveRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (isUpperCase(updatedSquares[index + 1].piece.pieceType)) {
                         potentialMoves.push(index + 1);
-                        MoveRight(squares, index + 1, count + 1, maxDepth, potentialMoves);
                     }
                 }
             }
@@ -257,7 +268,6 @@ function MoveUpLeft(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (!isUpperCase(updatedSquares[index - 9].piece.pieceType)) {
                         potentialMoves.push(index - 9);
-                        MoveUpLeft(squares, index - 9, count + 1, maxDepth, potentialMoves);
                     }
                 }
                 else {
@@ -267,7 +277,6 @@ function MoveUpLeft(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (isUpperCase(updatedSquares[index - 9].piece.pieceType)) {
                         potentialMoves.push(index - 9);
-                        MoveUpLeft(squares, index - 9, count + 1, maxDepth, potentialMoves);
                     }
                 }
             }
@@ -291,7 +300,7 @@ function MoveDownLeft(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (!isUpperCase(updatedSquares[index + 7].piece.pieceType)) {
                         potentialMoves.push(index + 7);
-                        MoveDownLeft(squares, index + 7, count + 1, maxDepth, potentialMoves);
+
                     }
                 }
                 else {
@@ -301,7 +310,7 @@ function MoveDownLeft(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (isUpperCase(updatedSquares[index + 7].piece.pieceType)) {
                         potentialMoves.push(index + 7);
-                        MoveDownLeft(squares, index + 7, count + 1, maxDepth, potentialMoves);
+
                     }
                 }
             }
@@ -325,7 +334,7 @@ function MoveUpRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (!isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
                         potentialMoves.push(index - 7);
-                        MoveUpRight(squares, index - 7, count + 1, maxDepth, potentialMoves);;
+
                     }
                 }
                 else {
@@ -335,7 +344,6 @@ function MoveUpRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
                         potentialMoves.push(index - 7);
-                        MoveUpRight(squares, index - 7, count + 1, maxDepth, potentialMoves);
                     }
                 }
             }
@@ -359,7 +367,7 @@ function MoveDownRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (!isUpperCase(updatedSquares[index + 9].piece.pieceType)) {
                         potentialMoves.push(index + 9);
-                        MoveDownRight(squares, index + 9, count + 1, maxDepth, potentialMoves);
+
                     }
                 }
                 else {
@@ -369,7 +377,7 @@ function MoveDownRight(squares, index, count, maxDepth, potentialMoves) {
                     }
                     else if (isUpperCase(updatedSquares[index + 9].piece.pieceType)) {
                         potentialMoves.push(index + 9);
-                        MoveDownRight(squares, index + 9, count + 1, maxDepth, potentialMoves);
+
                     }
                 }
             }
@@ -565,10 +573,16 @@ function PawnTake(squares, index, potentialMoves) {
                     potentialMoves.push(index - 9);
                 }
             }
+            if (updatedSquares[index - 1].piece.potentialPassant) {
+                potentialMoves.push(index - 9);
+            }
         }
         if (updatedSquares[index].position[0] !== 'H') {
             if (index - 7 >= 0) {
                 if (!isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
+                    potentialMoves.push(index - 7);
+                }
+                if (updatedSquares[index + 1].piece.potentialPassant) {
                     potentialMoves.push(index - 7);
                 }
             }
@@ -581,11 +595,17 @@ function PawnTake(squares, index, potentialMoves) {
                 if (isUpperCase(updatedSquares[index + 7].piece.pieceType) && updatedSquares[index + 7].piece.pieceType !== '') {
                     potentialMoves.push(index + 7);
                 }
+                if (updatedSquares[index - 1].piece.potentialPassant) {
+                    potentialMoves.push(index + 7);
+                }
             }
         }
         if (updatedSquares[index].position[0] !== 'H') {
             if (index + 9 <= 63) {
                 if (isUpperCase(updatedSquares[index + 9].piece.pieceType) && updatedSquares[index + 9].piece.pieceType !== '') {
+                    potentialMoves.push(index + 9);
+                }
+                if (updatedSquares[index + 1].piece.potentialPassant) {
                     potentialMoves.push(index + 9);
                 }
             }

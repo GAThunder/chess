@@ -6,6 +6,7 @@ import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
 import { PotentialMoves, MovePiece, PotentialEnPassant } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
 import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
+import { ResetPassant } from '../Utilities/ResetPassant/ResetPassant.js';
 
 function Chess() {
   const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQkq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
@@ -82,7 +83,7 @@ function Chess() {
         //Sets selected piece and highlights potential moves
         setSelectedPiece(index);
         newSquares[index].highlighted = true;
-        potentialMoves = PotentialMoves(newSquares, index);
+        potentialMoves = PotentialMoves(newSquares, index,);
         HighlightPieces(potentialMoves, newSquares);
         setSquares(newSquares);
       }
@@ -95,10 +96,8 @@ function Chess() {
       // executes a valid move as long as its not the piece already selected
       if (newSquares[index].highlighted === true && index !== selectedPiece) {
         let newFenArray = fen;
-        newFenArray[3] = '-'; //reset en passant FEN
-        PotentialEnPassant(newSquares, index, selectedPiece, newFenArray);
         UnHighlightPieces(newSquares);
-        MovePiece(newSquares, index, selectedPiece);
+        MovePiece(newSquares, index, selectedPiece, newFenArray);
         setSquares(newSquares);
         setSelectedPiece(-1);
         newFenArray[0] = GetCurrentFen(newSquares);
