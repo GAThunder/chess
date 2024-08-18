@@ -9,7 +9,7 @@ import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
 import { ResetPassant } from '../Utilities/ResetPassant/ResetPassant.js';
 
 function Chess() {
-  const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQkq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
+  const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQ','kq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
   // 2 is who can castle, 3 is if there is an en passent available
 
   const fenPosition = fen[0]; // Take just the part that positions the pieces
@@ -75,6 +75,7 @@ function Chess() {
     else {
       turn = "Black";
     }
+    console.log(index);
     const colorPiece = pieceName.split(' '); //colorPiece is an array. 0 is the color, 1 is the piece
     let potentialMoves = [];
     if (selectedPiece === -1) {
@@ -139,7 +140,7 @@ function Chess() {
   return <div className={classes.Chess}>
     <div className={classes.FEN_display}>
       <span className={classes.Input_Line}><p>Input FEN String:</p><input type="text" value={changedFEN} onChange={updateFEN}></input></span><button onClick={submitFEN}>Update</button>
-      <p>Current FEN is: {fen[0]} {fen[1]} {fen[2]} {fen[3]}</p>
+      <p>Current FEN is: {fen[0]} {fen[1]} {fen[2]}{fen[3]} {fen[4]}</p>
     </div>
     <Board
       key={fen}

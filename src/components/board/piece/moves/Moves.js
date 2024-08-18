@@ -1,6 +1,6 @@
 import { ResetPassant } from "../../../Utilities/ResetPassant/ResetPassant";
 
-function PotentialMoves(squares, index,) {
+function PotentialMoves(squares, index, newFenArray) {
     let potentialMoves = [];
     switch (squares[index].piece.pieceType) {
         case 'P':
@@ -108,7 +108,7 @@ function PotentialMoves(squares, index,) {
 }
 
 function MovePiece(newSquares, index, selectedPiece, newFenArray) {
-    let FenPassant = newFenArray[3];
+    let FenPassant = newFenArray[4];
     if (FenPassant !== '-') {
         if (newSquares[selectedPiece].piece.pieceType == 'p') {
             if (newSquares[index].position === FenPassant) {
@@ -126,6 +126,9 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
     newSquares[index].piece.pieceType = newSquares[selectedPiece].piece.pieceType;
     newSquares[index].piece.hasMoved = true;
     newSquares[selectedPiece].piece.pieceType = '';
+    newSquares[selectedPiece].piece.hasMoved = true;
+    updateCastle(newSquares, newFenArray);
+
 }
 
 //Update to pass original selections color as well. Right now for black pieces it treats them as white pieces after the first recursion on a blank space
@@ -656,13 +659,13 @@ function PotentialEnPassant(squares, index, selectedPiece, newFenArray) {
         if (selectedPiece - index === 16) {
             if (squares[index].position[0] !== 'H') {
                 if (squares[index + 1].piece.pieceType == 'p') {
-                    newFenArray[3] = squares[index + 8].position;
+                    newFenArray[4] = squares[index + 8].position;
                     squares[index].piece.potentialPassant = true;
                 }
             }
             if (squares[index].position[0] !== 'A') {
                 if (squares[index - 1].piece.pieceType == 'p') {
-                    newFenArray[3] = squares[index + 8].position;
+                    newFenArray[4] = squares[index + 8].position;
                     squares[index].piece.potentialPassant = true;
                 }
             }
@@ -674,13 +677,13 @@ function PotentialEnPassant(squares, index, selectedPiece, newFenArray) {
         if (selectedPiece - index === -16) {
             if (squares[index].position[0] !== 'H') {
                 if (squares[index + 1].piece.pieceType == 'P') {
-                    newFenArray[3] = squares[index - 8].position;
+                    newFenArray[4] = squares[index - 8].position;
                     squares[index].piece.potentialPassant = true;
                 }
             }
             if (squares[index].position[0] !== 'A') {
                 if (squares[index - 1].piece.pieceType == 'P') {
-                    newFenArray[3] = squares[index - 8].position;
+                    newFenArray[4] = squares[index - 8].position;
                     squares[index].piece.potentialPassant = true;
                 }
             }
@@ -690,9 +693,54 @@ function PotentialEnPassant(squares, index, selectedPiece, newFenArray) {
 
 }
 
+function Castle(squares, index, selectedPiece, newFenArray) {
+
+}
+
+function updateCastle(squares, newFenArray) {
+    if (squares[56].piece.hasMoved) {
+        if (newFenArray[2].includes('KQ')) {
+            newFenArray[2] = 'K'; 
+        }
+        else if (newFenArray[2].includes('Q')) {
+            newFenArray[2] = '-';
+        }
+    }
+    if (squares[63].piece.hasMoved) {
+        if (newFenArray[2].includes('KQ')) {
+            newFenArray[2] = 'Q';
+        }
+        else if (newFenArray[2].includes('K')) {
+            newFenArray[2] = '-';
+        }
+    }
+    if (squares[60].piece.hasMoved) {
+        newFenArray[2] = '-';
+    }
+    if (squares[0].piece.hasMoved) {
+        if (newFenArray[3].includes('kq')) {
+            newFenArray[3] = 'k';
+        }
+        else if (newFenArray[3].includes('q')) {
+            newFenArray[3] = '-';
+        }
+    }
+    if (squares[7].piece.hasMoved) {
+        if (newFenArray[3].includes('kq')) {
+            newFenArray[3] = 'q';
+        }
+        else if (newFenArray[3].includes('k')) {
+            newFenArray[3] = '-';
+        }
+    }
+    if (squares[4].piece.hasMoved) {
+        newFenArray[3] = '-';
+    }
+}
+
 export {
     MoveUp, MoveDown, MoveRight, MoveLeft,
     MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight,
-    PawnTake, PawnMoveUp, PawnMoveDown, MovePiece,
+    PawnTake, PawnMoveUp, PawnMoveDown, MovePiece, Castle,
     PotentialEnPassant, PotentialMoves
 }

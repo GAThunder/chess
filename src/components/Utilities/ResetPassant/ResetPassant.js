@@ -1,10 +1,10 @@
 function ResetPassant(squares, newFenArray) {
-    if (newFenArray[3] !== '-') {
+    if (newFenArray[4] !== '-') {
         squares.forEach((square) => {
             square.piece.potentialPassant = false;
         })
     }
-    newFenArray[3] = '-';
+    newFenArray[4] = '-';
 }
 
 export { ResetPassant }
