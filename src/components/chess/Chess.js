@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import Board from '../board/Board';
 import classes from './Chess.module.css';
 import Piece from '../board/piece/Piece.js';
 import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
-import { PotentialMoves, MovePiece, PotentialEnPassant } from '../board/piece/moves/Moves.js';
+import { PotentialMoves, MovePiece, } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
 import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
-import { ResetPassant } from '../Utilities/ResetPassant/ResetPassant.js';
+
 
 function Chess() {
   const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQ','kq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
@@ -35,7 +35,7 @@ function Chess() {
             position: xAxis[xSquare] + yAxis[y],
             highlighted: false,
           })
-          if (xSquare != 7) {
+          if (xSquare !== 7) {
             xSquare++;
           }
           else {
@@ -52,7 +52,7 @@ function Chess() {
           position: xAxis[xSquare] + yAxis[y],
           highlighted: false,
         })
-        if (xSquare != 7) {
+        if (xSquare !== 7) {
           xSquare++;
         }
         else {
@@ -82,9 +82,10 @@ function Chess() {
 
       if (newSquares[index].piece.pieceType !== '' && turn === colorPiece[0]) { // Make sure to include the index, as colorPiece is an array
         //Sets selected piece and highlights potential moves
+        let newFenArray = fen;
         setSelectedPiece(index);
         newSquares[index].highlighted = true;
-        potentialMoves = PotentialMoves(newSquares, index,);
+        potentialMoves = PotentialMoves(newSquares, index, newFenArray);
         HighlightPieces(potentialMoves, newSquares);
         setSquares(newSquares);
       }
@@ -106,10 +107,11 @@ function Chess() {
         setFen(newFenArray);
       }
 
-      else if (turn == colorPiece[0]) {
+      else if (turn === colorPiece[0]) {
         //changes the selected piece to a different selected piece
+        let newFenArray = fen;
         UnHighlightPieces(newSquares);
-        potentialMoves = PotentialMoves(newSquares, index);
+        potentialMoves = PotentialMoves(newSquares, index, newFenArray);
         HighlightPieces(potentialMoves, newSquares);
         setSelectedPiece(index);
         newSquares[index].highlighted = true;
