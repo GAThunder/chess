@@ -1,5 +1,20 @@
 import { ResetPassant } from "../../../Utilities/ResetPassant/ResetPassant";
 import { LocateKing } from "../../../Utilities/LocateKing/LocateKing";
+import { IsOnRightEdge } from "../../../Utilities/IsOnEdge/IsOnRightEdge";
+import { IsOnLeftEdge } from "../../../Utilities/IsOnEdge/IsOnLeftEdge";
+
+/*TODO I should have one move function that takes the direction as a parameter, and checks edges of board on each move. It'll make it cleaner and easier to maintain.
+With that goal in mind, I should also make one function for moves, that returns potential moves, and one function that just returns where the piece is currently threatening.
+That way the moves can be simulated, and I can also return the opponents potential moves without creating an infinite loop. */
+
+const up = -8;
+const down = 8;
+const left = -1;
+const right = 1;
+const upLeft = -9;
+const upRight = -7;
+const downLeft = 7;
+const downRight = 9;
 
 function PotentialMoves(squares, index, newFenArray) {
     let potentialMoves = [];
@@ -15,10 +30,10 @@ function PotentialMoves(squares, index, newFenArray) {
             break;
 
         case 'R':
-            MoveUp(squares, index, 0, 8, potentialMoves, true)
-            MoveDown(squares, index, 0, 8, potentialMoves, true)
-            MoveLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveRight(squares, index, 0, 8, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true)
             break;
 
         case 'N':
@@ -26,32 +41,32 @@ function PotentialMoves(squares, index, newFenArray) {
             break;
 
         case 'B':
-            MoveUpLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveDownLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveUpRight(squares, index, 0, 8, potentialMoves, true)
-            MoveDownRight(squares, index, 0, 8, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true)
             break;
 
         case 'Q':
-            MoveUp(squares, index, 0, 8, potentialMoves, true)
-            MoveDown(squares, index, 0, 8, potentialMoves, true)
-            MoveLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveRight(squares, index, 0, 8, potentialMoves, true)
-            MoveUpLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveDownLeft(squares, index, 0, 8, potentialMoves, true)
-            MoveUpRight(squares, index, 0, 8, potentialMoves, true)
-            MoveDownRight(squares, index, 0, 8, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true)
             break;
 
         case 'K':
-            MoveUp(squares, index, 0, 1, potentialMoves, true)
-            MoveDown(squares, index, 0, 1, potentialMoves, true)
-            MoveLeft(squares, index, 0, 1, potentialMoves, true)
-            MoveRight(squares, index, 0, 1, potentialMoves, true)
-            MoveUpLeft(squares, index, 0, 1, potentialMoves, true)
-            MoveDownLeft(squares, index, 0, 1, potentialMoves, true)
-            MoveUpRight(squares, index, 0, 1, potentialMoves, true)
-            MoveDownRight(squares, index, 0, 1, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, up, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, down, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, left, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, right, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, true)
+            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, true)
             Castle(squares, newFenArray, potentialMoves, true)
             break;
 
@@ -66,10 +81,10 @@ function PotentialMoves(squares, index, newFenArray) {
             break;
 
         case 'r':
-            MoveUp(squares, index, 0, 8, potentialMoves, false)
-            MoveDown(squares, index, 0, 8, potentialMoves, false)
-            MoveLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveRight(squares, index, 0, 8, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false)
             break;
 
         case 'n':
@@ -77,32 +92,32 @@ function PotentialMoves(squares, index, newFenArray) {
             break;
 
         case 'b':
-            MoveUpLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveDownLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveUpRight(squares, index, 0, 8, potentialMoves, false)
-            MoveDownRight(squares, index, 0, 8, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false)
             break;
 
         case 'q':
-            MoveUp(squares, index, 0, 8, potentialMoves, false)
-            MoveDown(squares, index, 0, 8, potentialMoves, false)
-            MoveLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveRight(squares, index, 0, 8, potentialMoves, false)
-            MoveUpLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveDownLeft(squares, index, 0, 8, potentialMoves, false)
-            MoveUpRight(squares, index, 0, 8, potentialMoves, false)
-            MoveDownRight(squares, index, 0, 8, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false)
             break;
 
         case 'k':
-            MoveUp(squares, index, 0, 1, potentialMoves, false)
-            MoveDown(squares, index, 0, 1, potentialMoves, false)
-            MoveLeft(squares, index, 0, 1, potentialMoves, false)
-            MoveRight(squares, index, 0, 1, potentialMoves, false)
-            MoveUpLeft(squares, index, 0, 1, potentialMoves, false)
-            MoveDownLeft(squares, index, 0, 1, potentialMoves, false)
-            MoveUpRight(squares, index, 0, 1, potentialMoves, false)
-            MoveDownRight(squares, index, 0, 1, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, up, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, down, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, left, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, right, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, false)
+            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, false)
             Castle(squares, newFenArray, potentialMoves, false)
             break;
     }
@@ -140,251 +155,45 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
 }
 
 //Update to pass original selections color as well. Right now for black pieces it treats them as white pieces after the first recursion on a blank space
-
-function MoveUp(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
+function MoveDirectional(squares, index, count, maxDepth, direction, potentialMoves, originalPieceWhite) {
     const isUpperCase = str => str === str.toUpperCase();
     let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index - 8 >= 0) {
-            if (originalPieceWhite) {
-                if (updatedSquares[index - 8].piece.pieceType === '') {
-                    potentialMoves.push(index - 8);
-                    MoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                }
-                else if (!isUpperCase(updatedSquares[index - 8].piece.pieceType)) {
-                    potentialMoves.push(index - 8);
-                }
-            }
-            else {
-                if (updatedSquares[index - 8].piece.pieceType === '') {
-                    potentialMoves.push(index - 8);
-                    MoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                }
-                else if (isUpperCase(updatedSquares[index - 8].piece.pieceType)) {
-                    potentialMoves.push(index - 8);
-                }
-            }
-        }
-    }
-    return -1;
-}
+    let moveTo = index + direction;
+    let moveRight = false;
+    let moveLeft = false;
 
-function MoveDown(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index + 8 <= 63) {
-            if (originalPieceWhite) {
-                if (updatedSquares[index + 8].piece.pieceType === '') {
-                    potentialMoves.push(index + 8);
-                    MoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                }
-                else if (!isUpperCase(updatedSquares[index + 8].piece.pieceType)) {
-                    potentialMoves.push(index + 8);
-                }
-            }
-            else {
-                if (updatedSquares[index + 8].piece.pieceType === '') {
-                    potentialMoves.push(index + 8);
-                    MoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                }
-                else if (isUpperCase(updatedSquares[index + 8].piece.pieceType)) {
-                    potentialMoves.push(index + 8);
-                }
-            }
-        }
+    if (direction === right || direction === upRight || direction === downRight) {
+        moveRight = true;
     }
 
-    return -1;
-}
+    if (direction === left || direction === upLeft || direction === downLeft) {
+        moveLeft = true;
+    }
 
-function MoveRight(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
     if (count < maxDepth) {
-        if (index + 1 <= 63) {
-            if (updatedSquares[index].position[0] !== 'H') {
+        if (moveTo >= 0 && moveTo <= 63) {
+            if ((moveRight && !IsOnRightEdge(squares, index)) || (moveLeft && !IsOnLeftEdge(squares, index)) || (!moveLeft && !moveRight)) {
                 if (originalPieceWhite) {
-                    if (updatedSquares[index + 1].piece.pieceType === '') {
-                        potentialMoves.push(index + 1);
-                        MoveRight(squares, index + 1, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                    if (updatedSquares[moveTo].piece.pieceType === '') {
+                        potentialMoves.push(moveTo);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite);
                     }
-                    else if (!isUpperCase(updatedSquares[index + 1].piece.pieceType)) {
-                        potentialMoves.push(index + 1);
+                    else if (!isUpperCase(updatedSquares[moveTo].piece.pieceType)) {
+                        potentialMoves.push(moveTo);
                     }
                 }
                 else {
-                    if (updatedSquares[index + 1].piece.pieceType === '') {
-                        potentialMoves.push(index + 1);
-                        MoveRight(squares, index + 1, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                    if (updatedSquares[moveTo].piece.pieceType === '') {
+                        potentialMoves.push(moveTo);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite);
                     }
-                    else if (isUpperCase(updatedSquares[index + 1].piece.pieceType)) {
-                        potentialMoves.push(index + 1);
-                    }
-                }
-            }
-        }
-    }
-    return -1;
-}
-
-function MoveLeft(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index - 1 >= 0) {
-            if (updatedSquares[index].position[0] !== 'A') {
-                if (originalPieceWhite) {
-                    if (updatedSquares[index - 1].piece.pieceType === '') {
-                        potentialMoves.push(index - 1);
-                        MoveLeft(squares, index - 1, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (!isUpperCase(updatedSquares[index - 1].piece.pieceType)) {
-                        potentialMoves.push(index - 1);
-                    }
-                }
-                else {
-                    if (updatedSquares[index - 1].piece.pieceType === '') {
-                        potentialMoves.push(index - 1);
-                        MoveLeft(squares, index - 1, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (isUpperCase(updatedSquares[index - 1].piece.pieceType)) {
-                        potentialMoves.push(index - 1);
+                    else if (isUpperCase(updatedSquares[moveTo].piece.pieceType)) {
+                        potentialMoves.push(moveTo);
                     }
                 }
             }
         }
     }
-
-    return -1;
-}
-
-function MoveUpLeft(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index - 9 >= 0) {
-            if (updatedSquares[index].position[0] !== 'A') {
-                if (originalPieceWhite) {
-                    if (updatedSquares[index - 9].piece.pieceType === '') {
-                        potentialMoves.push(index - 9);
-                        MoveUpLeft(squares, index - 9, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (!isUpperCase(updatedSquares[index - 9].piece.pieceType)) {
-                        potentialMoves.push(index - 9);
-                    }
-                }
-                else {
-                    if (updatedSquares[index - 9].piece.pieceType === '') {
-                        potentialMoves.push(index - 9);
-                        MoveUpLeft(squares, index - 9, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (isUpperCase(updatedSquares[index - 9].piece.pieceType)) {
-                        potentialMoves.push(index - 9);
-                    }
-                }
-            }
-        }
-    }
-
-    return -1;
-}
-
-function MoveDownLeft(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index + 7 <= 63) {
-            if (updatedSquares[index].position[0] !== 'A') {
-                if (originalPieceWhite) {
-                    if (updatedSquares[index + 7].piece.pieceType === '') {
-                        potentialMoves.push(index + 7);
-                        MoveDownLeft(squares, index + 7, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (!isUpperCase(updatedSquares[index + 7].piece.pieceType)) {
-                        potentialMoves.push(index + 7);
-
-                    }
-                }
-                else {
-                    if (updatedSquares[index + 7].piece.pieceType === '') {
-                        potentialMoves.push(index + 7);
-                        MoveDownLeft(squares, index + 7, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (isUpperCase(updatedSquares[index + 7].piece.pieceType)) {
-                        potentialMoves.push(index + 7);
-
-                    }
-                }
-            }
-        }
-    }
-
-    return -1;
-}
-
-function MoveUpRight(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index - 7 >= 0) {
-            if (updatedSquares[index].position[0] !== 'H') {
-                if (originalPieceWhite) {
-                    if (updatedSquares[index - 7].piece.pieceType === '') {
-                        potentialMoves.push(index - 7);
-                        MoveUpRight(squares, index - 7, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (!isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
-                        potentialMoves.push(index - 7);
-
-                    }
-                }
-                else {
-                    if (updatedSquares[index - 7].piece.pieceType === '') {
-                        potentialMoves.push(index - 7);
-                        MoveUpRight(squares, index - 7, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
-                        potentialMoves.push(index - 7);
-                    }
-                }
-            }
-        }
-    }
-
-    return -1;
-}
-
-function MoveDownRight(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let updatedSquares = [...squares];
-    if (count < maxDepth) {
-        if (index + 9 <= 63) {
-            if (updatedSquares[index].position[0] !== 'H') {
-                if (originalPieceWhite) {
-                    if (updatedSquares[index + 9].piece.pieceType === '') {
-                        potentialMoves.push(index + 9);
-                        MoveDownRight(squares, index + 9, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (!isUpperCase(updatedSquares[index + 9].piece.pieceType)) {
-                        potentialMoves.push(index + 9);
-
-                    }
-                }
-                else {
-                    if (updatedSquares[index + 9].piece.pieceType === '') {
-                        potentialMoves.push(index + 9);
-                        MoveDownRight(squares, index + 9, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                    }
-                    else if (isUpperCase(updatedSquares[index + 9].piece.pieceType)) {
-                        potentialMoves.push(index + 9);
-
-                    }
-                }
-            }
-        }
-    }
-
     return -1;
 }
 
@@ -617,18 +426,19 @@ function PawnTake(squares, index, potentialMoves) {
 
 function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
     let updatedSquares = [...squares];
+    let moveTo = index + up;
     if (count < maxDepth) {
-        if (index - 8 >= 0) {
+        if (moveTo >= 0) {
             if (originalPieceWhite) {
-                if (updatedSquares[index - 8].piece.pieceType === '') {
-                    potentialMoves.push(index - 8);
-                    PawnMoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                if (updatedSquares[moveTo].piece.pieceType === '') {
+                    potentialMoves.push(moveTo);
+                    PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
             }
             else {
-                if (updatedSquares[index - 8].piece.pieceType === '') {
-                    potentialMoves.push(index - 8);
-                    PawnMoveUp(squares, index - 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                if (updatedSquares[moveTo].piece.pieceType === '') {
+                    potentialMoves.push(moveTo);
+                    PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
             }
         }
@@ -639,19 +449,20 @@ function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPie
 
 function PawnMoveDown(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
     let updatedSquares = [...squares];
+    let moveTo = index + down;
     if (count < maxDepth) {
-        if (index + 8 <= 63) {
+        if (moveTo <= 63) {
             if (originalPieceWhite) {
-                if (updatedSquares[index + 8].piece.pieceType === '') {
-                    potentialMoves.push(index + 8);
-                    PawnMoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                if (updatedSquares[moveTo].piece.pieceType === '') {
+                    potentialMoves.push(moveTo);
+                    PawnMoveDown(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
 
             }
             else {
-                if (updatedSquares[index + 8].piece.pieceType === '') {
-                    potentialMoves.push(index + 8);
-                    PawnMoveDown(squares, index + 8, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                if (updatedSquares[moveTo].piece.pieceType === '') {
+                    potentialMoves.push(moveTo);
+                    PawnMoveDown(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
 
             }
@@ -824,8 +635,7 @@ function rookCastle(newSquares, selectedPiece, index) {
 }
 
 export {
-    MoveUp, MoveDown, MoveRight, MoveLeft,
-    MoveUpLeft, MoveDownLeft, MoveUpRight, MoveDownRight,
+    MoveDirectional,
     PawnTake, PawnMoveUp, PawnMoveDown, MovePiece, Castle,
     PotentialEnPassant, PotentialMoves
 }
