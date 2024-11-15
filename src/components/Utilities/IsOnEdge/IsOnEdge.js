@@ -22,7 +22,7 @@ function IsOnEdge(squares, index, direction, moveDown, moveLeft, moveRight, move
     const downLeft = 7;
     const downRight = 9;
 
-    const isValidMove = true;
+    var isValidMove = true;
 
     if (direction === right || direction === upRight || direction === downRight) {
         moveRight = true;

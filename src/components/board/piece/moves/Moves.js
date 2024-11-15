@@ -3,6 +3,7 @@ import { IsOnRightEdge } from "../../../Utilities/IsOnEdge/IsOnRightEdge";
 import { IsOnLeftEdge } from "../../../Utilities/IsOnEdge/IsOnLeftEdge";
 import { IsOnBottomEdge } from "../../../Utilities/IsOnEdge/IsOnBottomEdge";
 import { IsOnTopEdge } from "../../../Utilities/IsOnEdge/IsOnTopEdge";
+import { IsOnEdge } from "../../../Utilities/IsOnEdge/IsOnEdge";
 import { IsWhite } from "../../../Utilities/IsWhite/IsWhite";
 import { AddPotentialMove } from "../../../Utilities/AddPotentialMove/AddPotentialMove";
 
@@ -174,59 +175,50 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
     let moveUp = false;
     let moveDown = false;
 
-    if (direction === right || direction === upRight || direction === downRight) {
-        moveRight = true;
-    }
-
-    if (direction === left || direction === upLeft || direction === downLeft) {
-        moveLeft = true;
-    }
-
     if (count < maxDepth) {
-        if (moveTo >= 0 && moveTo <= 63) {
-            if ((moveRight && !IsOnRightEdge(squares, index)) || (moveLeft && !IsOnLeftEdge(squares, index)) || (!moveLeft && !moveRight)) {
-                if (originalPieceWhite) {
-                    if (isJustThreaten) {
-                        if (squares[moveTo].piece.pieceType === '') {
-                            potentialMoves.push(moveTo);
-                            MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
-                        }
-                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
-                            potentialMoves.push(moveTo);
-                        }
+        if (IsOnEdge(squares, index, direction, moveDown, moveLeft, moveRight, moveUp)) {
+            if (originalPieceWhite) {
+                if (isJustThreaten) {
+                    if (squares[moveTo].piece.pieceType === '') {
+                        potentialMoves.push(moveTo);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                     }
-                    else {
-                        if (squares[moveTo].piece.pieceType === '') {
-                            AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                            MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
-                        }
-                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
-                            AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        }
+                    else if (!IsWhite(squares[moveTo].piece.pieceType)) {
+                        potentialMoves.push(moveTo);
                     }
                 }
                 else {
-                    if (isJustThreaten) {
-                        if (squares[moveTo].piece.pieceType === '') {
-                            potentialMoves.push(moveTo);
-                            MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
-                        }
-                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
-                            potentialMoves.push(moveTo);
-                        }
+                    if (squares[moveTo].piece.pieceType === '') {
+                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                     }
-                    else {
-                        if (squares[moveTo].piece.pieceType === '') {
-                            AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                            MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
-                        }
-                        else if (IsWhite(squares[moveTo].piece.pieceType)) {
-                            AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        }
+                    else if (!IsWhite(squares[moveTo].piece.pieceType)) {
+                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                    }
+                }
+            }
+            else {
+                if (isJustThreaten) {
+                    if (squares[moveTo].piece.pieceType === '') {
+                        potentialMoves.push(moveTo);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                    }
+                    else if (!IsWhite(squares[moveTo].piece.pieceType)) {
+                        potentialMoves.push(moveTo);
+                    }
+                }
+                else {
+                    if (squares[moveTo].piece.pieceType === '') {
+                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                    }
+                    else if (IsWhite(squares[moveTo].piece.pieceType)) {
+                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
                     }
                 }
             }
         }
+
     }
     return -1;
 }
