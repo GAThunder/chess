@@ -14,7 +14,7 @@ function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
     }
 
     for(let i = 0; i < squares.length; i++){
-        let pieceMoves = [];
+        var pieceMoves = [];
         if(originalPieceWhite && !IsWhite(squares[i].piece.pieceType))
         {
             pieceMoves = squares[i].piece.pieceThreatens(squares, i, newFenArray)
@@ -39,6 +39,7 @@ function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
         return true;
     }
     else {
+        console.log(opponentPotentialMoves, kingIndex, squares)
         return false;
     }
 }

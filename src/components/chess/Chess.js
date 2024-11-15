@@ -76,7 +76,7 @@ function Chess() {
     else {
       turn = "Black";
     }
-    console.log(index);
+  
     const colorPiece = pieceName.split(' '); //colorPiece is an array. 0 is the color, 1 is the piece
     let potentialMoves = [];
     if (selectedPiece === -1) {
