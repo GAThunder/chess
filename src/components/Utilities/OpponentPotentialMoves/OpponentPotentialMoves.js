@@ -1,26 +1,41 @@
-import { PotentialMoves } from "../../board/piece/moves/Moves";
 import { LocateKing } from "../LocateKing/LocateKing";
+import { IsWhite } from "../IsWhite/IsWhite";
 
-function OpponentPotentialMovesCheck(squares, index, newFenArray, turn) {
+/*This is supposed to get an array containing all the squares the other player is threatening, and see if after making a mock move, 
+if that move is valid, or if it would put the king in check */
+
+function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
     let opponentPotentialMoves = [];
-    if (turn === 'w') {
-        let kingIndex = LocateKing(squares, true)
+    if (originalPieceWhite) {
+        var kingIndex = LocateKing(squares, true)
     }
     else {
-        let kingIndex = LocateKing(squares, false)
+        var kingIndex = LocateKing(squares, false)
     }
 
-    squares.forEach((square, index) => {
+    for(let i = 0; i < squares.length; i++){
         let pieceMoves = [];
-        pieceMoves = PotentialMoves(squares, index, newFenArray)
-        pieceMoves.forEach((index) => {
-            if(!opponentPotentialMoves.includes(index)) {
-                opponentPotentialMoves.push(index);
+        if(originalPieceWhite && !IsWhite(squares[i].piece.pieceType))
+        {
+            pieceMoves = squares[i].piece.pieceThreatens(squares, i, newFenArray)
+                pieceMoves.forEach((index) => {
+                    if (!opponentPotentialMoves.includes(index)) {
+                        opponentPotentialMoves.push(index);
+                    }
+                })
+        }
+        else if (!originalPieceWhite && IsWhite(squares[i].piece.pieceType))
+            {
+                pieceMoves = squares[i].piece.pieceThreatens(squares, i, newFenArray)
+                    pieceMoves.forEach((index) => {
+                        if (!opponentPotentialMoves.includes(index)) {
+                            opponentPotentialMoves.push(index);
+                        }
+                    })
             }
-        })
-    });
+    }
 
-    if(opponentPotentialMoves.includes(kingIndex)){
+    if (opponentPotentialMoves.includes(kingIndex)) {
         return true;
     }
     else {
@@ -28,4 +43,4 @@ function OpponentPotentialMovesCheck(squares, index, newFenArray, turn) {
     }
 }
 
-export { OpponentPotentialMovesCheck };
+export { OpponentPotentialMoves };

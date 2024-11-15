@@ -1,17 +1,19 @@
+// Sees which square the king is on, and returns the index. 
+
 function LocateKing(squares, isWhite) {
     if (isWhite) {
-        squares.forEach((square, index) => {
-            if (square.piece.piecetype === 'K') {
-                return index;
+        for(let i = 0; i < squares.length; i++){
+            if (squares[i].piece.pieceType === 'K') {
+                return i;
             }
-        });
+        }
     }
     else {
-        squares.forEach((square, index) => {
-            if (square.piece.piecetype === 'k') {
-                return index;
+        for(let i = 0; i < squares.length; i++){
+            if (squares[i].piece.pieceType === 'k') {
+                return i;
             }
-        });
+        }
     }
     return -1;
 }

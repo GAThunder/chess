@@ -6,6 +6,7 @@ import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
 import { PotentialMoves, MovePiece, } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
 import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
+import { CopyBoard } from '../Utilities/CopyBoard/CopyBoard.js';
 
 
 function Chess() {
@@ -68,7 +69,7 @@ function Chess() {
   //the second should let the player make a valid move, and return a prompt to do so if no valid move is made, or select another valid piece.
   const selectPiece = (pieceName, index) => {
     let turn = '';
-    let newSquares = [...squares]; // make a copy of the board array to update
+    let newSquares = CopyBoard(squares); // make a copy of the board array to update
     if (fen[1] === 'w') {
       turn = "White";
     }
@@ -85,7 +86,7 @@ function Chess() {
         let newFenArray = fen;
         setSelectedPiece(index);
         newSquares[index].highlighted = true;
-        potentialMoves = PotentialMoves(newSquares, index, newFenArray);
+        potentialMoves = newSquares[index].piece.pieceMoves(newSquares, index, newFenArray);
         HighlightPieces(potentialMoves, newSquares);
         setSquares(newSquares);
       }
@@ -122,7 +123,7 @@ function Chess() {
         alert("Please select a valid piece");
       }
     }
-    console.log(newSquares[index]);
+    
   }
 
   const updateFEN = (e) => {

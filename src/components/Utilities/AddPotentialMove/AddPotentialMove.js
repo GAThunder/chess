@@ -1,18 +1,18 @@
-import { OpponentPotentialMovesCheck } from "../OpponentPotentialMoves/OpponentPotentialMovesCheck";
+import { OpponentPotentialMoves } from "../OpponentPotentialMoves/OpponentPotentialMoves";
+import { CopyBoard } from "../CopyBoard/CopyBoard";
 
-//This is causing an infinite loop for some reason, need to figure out why. I don't want it to update the board, just simulate it on a copy
+//This generates a fake board, and on that board it makes each move to see if it would put the player in check, or if its valid to add as an option
 
-function AddPotentialMove(squares, index, moveTo, potentialMoves, whiteTurn, newFenArray) {
-    let tempSquares = squares;
+function AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray) {
+    const tempSquares = CopyBoard(squares);
+
     tempSquares[moveTo].piece.pieceType = tempSquares[index].piece.pieceType;
     tempSquares[moveTo].piece.hasMoved = true;
     tempSquares[index].piece.pieceType = '';
     tempSquares[index].piece.hasMoved = true;
-    console.log(newFenArray)
 
-    if (!OpponentPotentialMovesCheck(tempSquares, newFenArray, whiteTurn)) {
+    if (!OpponentPotentialMoves(tempSquares, newFenArray, originalPieceWhite)) {
         potentialMoves.push(moveTo);
-        console.log(potentialMoves)
     }
 }
 
