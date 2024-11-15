@@ -11,7 +11,7 @@ function AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceW
     tempSquares[index].piece.pieceType = '';
     tempSquares[index].piece.hasMoved = true;
 
-    if (!OpponentPotentialMoves(tempSquares, newFenArray, originalPieceWhite)) {
+    if (OpponentPotentialMoves(tempSquares, newFenArray, originalPieceWhite) === false) {
         potentialMoves.push(moveTo);
     }
 }

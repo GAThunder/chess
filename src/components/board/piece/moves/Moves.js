@@ -3,7 +3,6 @@ import { IsOnRightEdge } from "../../../Utilities/IsOnEdge/IsOnRightEdge";
 import { IsOnLeftEdge } from "../../../Utilities/IsOnEdge/IsOnLeftEdge";
 import { IsWhite } from "../../../Utilities/IsWhite/IsWhite";
 import { AddPotentialMove } from "../../../Utilities/AddPotentialMove/AddPotentialMove";
-import { CopyBoard } from "../../../Utilities/CopyBoard/CopyBoard";
 
 /* Moves functions. Pawns, Knights, and Castling needs unique functions due to their special properties. */
 
@@ -163,7 +162,6 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
 }
 
 function MoveDirectional(squares, index, count, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten) {
-    let updatedSquares = CopyBoard(squares);
     let moveTo = index + direction;
     let moveRight = false;
     let moveLeft = false;
@@ -181,40 +179,40 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
             if ((moveRight && !IsOnRightEdge(squares, index)) || (moveLeft && !IsOnLeftEdge(squares, index)) || (!moveLeft && !moveRight)) {
                 if (originalPieceWhite) {
                     if (isJustThreaten) {
-                        if (updatedSquares[moveTo].piece.pieceType === '') {
+                        if (squares[moveTo].piece.pieceType === '') {
                             potentialMoves.push(moveTo);
                             MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                         }
-                        else if (!IsWhite(updatedSquares[moveTo].piece.pieceType)) {
+                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                             potentialMoves.push(moveTo);
                         }
                     }
                     else {
-                        if (updatedSquares[moveTo].piece.pieceType === '') {
+                        if (squares[moveTo].piece.pieceType === '') {
                             AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite);
                             MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                         }
-                        else if (!IsWhite(updatedSquares[moveTo].piece.pieceType)) {
+                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                             AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite);
                         }
                     }
                 }
                 else {
                     if (isJustThreaten) {
-                        if (updatedSquares[moveTo].piece.pieceType === '') {
+                        if (squares[moveTo].piece.pieceType === '') {
                             potentialMoves.push(moveTo);
                             MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                         }
-                        else if (!IsWhite(updatedSquares[moveTo].piece.pieceType)) {
+                        else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                             potentialMoves.push(moveTo);
                         }
                     }
                     else {
-                        if (updatedSquares[moveTo].piece.pieceType === '') {
+                        if (squares[moveTo].piece.pieceType === '') {
                             AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite);
                             MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
                         }
-                        else if (IsWhite(updatedSquares[moveTo].piece.pieceType)) {
+                        else if (IsWhite(squares[moveTo].piece.pieceType)) {
                             AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite);
                         }
                     }
@@ -228,125 +226,124 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
 function KnightMove(squares, index, potentialMoves) {
     const isUpperCase = str => str === str.toUpperCase();
     let isWhite = isUpperCase(squares[index].piece.pieceType)
-    let updatedSquares = CopyBoard(squares);
     if (index - 16 >= 0) {
-        if (updatedSquares[index - 16].position[0] !== 'H') {
+        if (squares[index - 16].position[0] !== 'H') {
             if (isWhite) {
-                if (updatedSquares[index - 15].piece.pieceType === '') {
+                if (squares[index - 15].piece.pieceType === '') {
                     potentialMoves.push(index - 15);
                 }
-                else if (!isUpperCase(updatedSquares[index - 15].piece.pieceType)) {
+                else if (!isUpperCase(squares[index - 15].piece.pieceType)) {
                     potentialMoves.push(index - 15);
                 }
             }
             else {
-                if (updatedSquares[index - 15].piece.pieceType === '') {
+                if (squares[index - 15].piece.pieceType === '') {
                     potentialMoves.push(index - 15);
 
                 }
-                else if (isUpperCase(updatedSquares[index - 15].piece.pieceType)) {
+                else if (isUpperCase(squares[index - 15].piece.pieceType)) {
                     potentialMoves.push(index - 15);
                 }
             }
         }
-        if (updatedSquares[index - 16].position[0] !== 'A') {
+        if (squares[index - 16].position[0] !== 'A') {
             if (isWhite) {
-                if (updatedSquares[index - 17].piece.pieceType === '') {
+                if (squares[index - 17].piece.pieceType === '') {
                     potentialMoves.push(index - 17);
                 }
-                else if (!isUpperCase(updatedSquares[index - 17].piece.pieceType)) {
+                else if (!isUpperCase(squares[index - 17].piece.pieceType)) {
                     potentialMoves.push(index - 17);
                 }
             }
             else {
-                if (updatedSquares[index - 17].piece.pieceType === '') {
+                if (squares[index - 17].piece.pieceType === '') {
                     potentialMoves.push(index - 17);
 
                 }
-                else if (isUpperCase(updatedSquares[index - 17].piece.pieceType)) {
+                else if (isUpperCase(squares[index - 17].piece.pieceType)) {
                     potentialMoves.push(index - 17);
                 }
             }
         }
     }
     if (index + 16 <= 63) {
-        if (updatedSquares[index + 16].position[0] !== 'H') {
+        if (squares[index + 16].position[0] !== 'H') {
             if (isWhite) {
-                if (updatedSquares[index + 17].piece.pieceType === '') {
+                if (squares[index + 17].piece.pieceType === '') {
                     potentialMoves.push(index + 17);
                 }
-                else if (!isUpperCase(updatedSquares[index + 17].piece.pieceType)) {
+                else if (!isUpperCase(squares[index + 17].piece.pieceType)) {
                     potentialMoves.push(index + 17);
                 }
             }
             else {
-                if (updatedSquares[index + 17].piece.pieceType === '') {
+                if (squares[index + 17].piece.pieceType === '') {
                     potentialMoves.push(index + 17);
 
                 }
-                else if (isUpperCase(updatedSquares[index + 17].piece.pieceType)) {
+                else if (isUpperCase(squares[index + 17].piece.pieceType)) {
                     potentialMoves.push(index + 17);
                 }
             }
         }
-        if (updatedSquares[index + 16].position[0] !== 'A') {
+        if (squares[index + 16].position[0] !== 'A') {
             if (isWhite) {
-                if (updatedSquares[index + 15].piece.pieceType === '') {
+                if (squares[index + 15].piece.pieceType === '') {
                     potentialMoves.push(index + 15);
                 }
-                else if (!isUpperCase(updatedSquares[index + 15].piece.pieceType)) {
+                else if (!isUpperCase(squares[index + 15].piece.pieceType)) {
                     potentialMoves.push(index + 15);
                 }
             }
             else {
-                if (updatedSquares[index + 15].piece.pieceType === '') {
+                if (squares[index + 15].piece.pieceType === '') {
                     potentialMoves.push(index + 15);
 
                 }
-                else if (isUpperCase(updatedSquares[index + 15].piece.pieceType)) {
+                else if (isUpperCase(squares[index + 15].piece.pieceType)) {
                     potentialMoves.push(index + 15);
                 }
             }
         }
     }
     if (index - 8 >= 0) {
-        if (updatedSquares[index - 8].position[0] !== 'H') {
-            if (updatedSquares[index - 7].position[0] !== 'H') {
+        if (squares[index - 8].position[0] !== 'H') {
+            if (squares[index - 7].position[0] !== 'H') {
                 if (isWhite) {
-                    if (updatedSquares[index - 6].piece.pieceType === '') {
+                    if (squares[index - 6].piece.pieceType === '') {
                         potentialMoves.push(index - 6);
                     }
-                    else if (!isUpperCase(updatedSquares[index - 6].piece.pieceType)) {
+                    else if (!isUpperCase(squares[index - 6].piece.pieceType)) {
                         potentialMoves.push(index - 6);
                     }
                 }
                 else {
-                    if (updatedSquares[index - 6].piece.pieceType === '') {
+                    if (squares[index - 6].piece.pieceType === '') {
                         potentialMoves.push(index - 6);
 
                     }
-                    else if (isUpperCase(updatedSquares[index - 6].piece.pieceType)) {
+                    else if (isUpperCase(squares[index - 6].piece.pieceType)) {
                         potentialMoves.push(index - 6);
                     }
                 }
             }
         }
-        if (updatedSquares[index - 8].position[0] !== 'A') {
-            if (updatedSquares[index - 9].position[0] !== 'A') {
+        if (squares[index - 8].position[0] !== 'A') {
+            if (squares[index - 9].position[0] !== 'A') {
                 if (isWhite) {
-                    if (updatedSquares[index - 10].piece.pieceType === '') {
+                    if (squares[index - 10].piece.pieceType === '') {
                         potentialMoves.push(index - 10);
                     }
-                    else if (!isUpperCase(updatedSquares[index - 10].piece.pieceType)) {
+                    else if (!isUpperCase(squares[index - 10].piece.pieceType)) {
                         potentialMoves.push(index - 10);
                     }
                 }
                 else {
-                    if (updatedSquares[index - 10].piece.pieceType === '') {
+                    if (squares[index - 10].piece.pieceType === '') {
                         potentialMoves.push(index - 10);
 
                     }
-                    else if (isUpperCase(updatedSquares[index - 10].piece.pieceType)) {
+                    else if (isUpperCase(squares[index - 10].piece.pieceType)) {
                         potentialMoves.push(index - 10);
                     }
                 }
@@ -354,43 +351,43 @@ function KnightMove(squares, index, potentialMoves) {
         }
     }
     if (index + 8 <= 63) {
-        if (updatedSquares[index + 8].position[0] !== 'A') {
-            if (updatedSquares[index + 7].position[0] !== 'A') {
+        if (squares[index + 8].position[0] !== 'A') {
+            if (squares[index + 7].position[0] !== 'A') {
                 if (isWhite) {
-                    if (updatedSquares[index + 6].piece.pieceType === '') {
+                    if (squares[index + 6].piece.pieceType === '') {
                         potentialMoves.push(index + 6);
                     }
-                    else if (!isUpperCase(updatedSquares[index + 6].piece.pieceType)) {
+                    else if (!isUpperCase(squares[index + 6].piece.pieceType)) {
                         potentialMoves.push(index + 6);
                     }
                 }
                 else {
-                    if (updatedSquares[index + 6].piece.pieceType === '') {
+                    if (squares[index + 6].piece.pieceType === '') {
                         potentialMoves.push(index + 6);
 
                     }
-                    else if (isUpperCase(updatedSquares[index + 6].piece.pieceType)) {
+                    else if (isUpperCase(squares[index + 6].piece.pieceType)) {
                         potentialMoves.push(index + 6);
                     }
                 }
             }
         }
-        if (updatedSquares[index + 8].position[0] !== 'H') {
-            if (updatedSquares[index + 9].position[0] !== 'H') {
+        if (squares[index + 8].position[0] !== 'H') {
+            if (squares[index + 9].position[0] !== 'H') {
                 if (isWhite) {
-                    if (updatedSquares[index + 10].piece.pieceType === '') {
+                    if (squares[index + 10].piece.pieceType === '') {
                         potentialMoves.push(index + 10);
                     }
-                    else if (!isUpperCase(updatedSquares[index + 10].piece.pieceType)) {
+                    else if (!isUpperCase(squares[index + 10].piece.pieceType)) {
                         potentialMoves.push(index + 10);
                     }
                 }
                 else {
-                    if (updatedSquares[index + 10].piece.pieceType === '') {
+                    if (squares[index + 10].piece.pieceType === '') {
                         potentialMoves.push(index + 10);
 
                     }
-                    else if (isUpperCase(updatedSquares[index + 10].piece.pieceType)) {
+                    else if (isUpperCase(squares[index + 10].piece.pieceType)) {
                         potentialMoves.push(index + 10);
                     }
                 }
@@ -403,24 +400,23 @@ function KnightMove(squares, index, potentialMoves) {
 function PawnTake(squares, index, potentialMoves) {
     const isUpperCase = str => str === (str.toUpperCase());
     let isWhite = isUpperCase(squares[index].piece.pieceType)
-    let updatedSquares = CopyBoard(squares);
     if (isWhite) {
-        if (updatedSquares[index].position[0] !== 'A') {
+        if (squares[index].position[0] !== 'A') {
             if (index - 9 >= 0) {
-                if (!isUpperCase(updatedSquares[index - 9].piece.pieceType)) {
+                if (!isUpperCase(squares[index - 9].piece.pieceType)) {
                     potentialMoves.push(index - 9);
                 }
             }
-            if (updatedSquares[index - 1].piece.potentialPassant) {
+            if (squares[index - 1].piece.potentialPassant) {
                 potentialMoves.push(index - 9);
             }
         }
-        if (updatedSquares[index].position[0] !== 'H') {
+        if (squares[index].position[0] !== 'H') {
             if (index - 7 >= 0) {
-                if (!isUpperCase(updatedSquares[index - 7].piece.pieceType)) {
+                if (!isUpperCase(squares[index - 7].piece.pieceType)) {
                     potentialMoves.push(index - 7);
                 }
-                if (updatedSquares[index + 1].piece.potentialPassant) {
+                if (squares[index + 1].piece.potentialPassant) {
                     potentialMoves.push(index - 7);
                 }
             }
@@ -428,22 +424,22 @@ function PawnTake(squares, index, potentialMoves) {
 
     }
     else {
-        if (updatedSquares[index].position[0] !== 'A') {
+        if (squares[index].position[0] !== 'A') {
             if (index + 7 <= 63) {
-                if (isUpperCase(updatedSquares[index + 7].piece.pieceType) && updatedSquares[index + 7].piece.pieceType !== '') {
+                if (isUpperCase(squares[index + 7].piece.pieceType) && squares[index + 7].piece.pieceType !== '') {
                     potentialMoves.push(index + 7);
                 }
-                if (updatedSquares[index - 1].piece.potentialPassant) {
+                if (squares[index - 1].piece.potentialPassant) {
                     potentialMoves.push(index + 7);
                 }
             }
         }
-        if (updatedSquares[index].position[0] !== 'H') {
+        if (squares[index].position[0] !== 'H') {
             if (index + 9 <= 63) {
-                if (isUpperCase(updatedSquares[index + 9].piece.pieceType) && updatedSquares[index + 9].piece.pieceType !== '') {
+                if (isUpperCase(squares[index + 9].piece.pieceType) && squares[index + 9].piece.pieceType !== '') {
                     potentialMoves.push(index + 9);
                 }
-                if (updatedSquares[index + 1].piece.potentialPassant) {
+                if (squares[index + 1].piece.potentialPassant) {
                     potentialMoves.push(index + 9);
                 }
             }
@@ -453,18 +449,17 @@ function PawnTake(squares, index, potentialMoves) {
 }
 
 function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    let updatedSquares = CopyBoard(squares);
     let moveTo = index + up;
     if (count < maxDepth) {
         if (moveTo >= 0) {
             if (originalPieceWhite) {
-                if (updatedSquares[moveTo].piece.pieceType === '') {
+                if (squares[moveTo].piece.pieceType === '') {
                     potentialMoves.push(moveTo);
                     PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
             }
             else {
-                if (updatedSquares[moveTo].piece.pieceType === '') {
+                if (squares[moveTo].piece.pieceType === '') {
                     potentialMoves.push(moveTo);
                     PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
@@ -476,19 +471,18 @@ function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPie
 }
 
 function PawnMoveDown(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
-    let updatedSquares = CopyBoard(squares);
     let moveTo = index + down;
     if (count < maxDepth) {
         if (moveTo <= 63) {
             if (originalPieceWhite) {
-                if (updatedSquares[moveTo].piece.pieceType === '') {
+                if (squares[moveTo].piece.pieceType === '') {
                     potentialMoves.push(moveTo);
                     PawnMoveDown(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
 
             }
             else {
-                if (updatedSquares[moveTo].piece.pieceType === '') {
+                if (squares[moveTo].piece.pieceType === '') {
                     potentialMoves.push(moveTo);
                     PawnMoveDown(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
                 }
