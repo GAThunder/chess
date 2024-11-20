@@ -243,172 +243,139 @@ function MoveDirectional(
 }
 
 function KnightMove(squares, index, potentialMoves) {
-    const isUpperCase = str => str === str.toUpperCase();
-    let isWhite = isUpperCase(squares[index].piece.pieceType)
     if (index - 16 >= 0) {
         if (squares[index - 16].position[0] !== 'H') {
-            if (isWhite) {
-                if (squares[index - 15].piece.pieceType === '') {
-                    potentialMoves.push(index - 15);
-                }
-                else if (!isUpperCase(squares[index - 15].piece.pieceType)) {
+            if (squares[index - 15].piece.pieceType === '') {
+                potentialMoves.push(index - 15);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index - 15].piece.pieceType)) {
                     potentialMoves.push(index - 15);
                 }
             }
             else {
-                if (squares[index - 15].piece.pieceType === '') {
-                    potentialMoves.push(index - 15);
-
-                }
-                else if (isUpperCase(squares[index - 15].piece.pieceType)) {
+                if (IsWhite(squares[index - 15].piece.pieceType)) {
                     potentialMoves.push(index - 15);
                 }
             }
         }
         if (squares[index - 16].position[0] !== 'A') {
-            if (isWhite) {
-                if (squares[index - 17].piece.pieceType === '') {
-                    potentialMoves.push(index - 17);
-                }
-                else if (!isUpperCase(squares[index - 17].piece.pieceType)) {
+            if (squares[index - 17].piece.pieceType === '') {
+                potentialMoves.push(index - 17);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index - 17].piece.pieceType)) {
                     potentialMoves.push(index - 17);
                 }
             }
             else {
-                if (squares[index - 17].piece.pieceType === '') {
-                    potentialMoves.push(index - 17);
-
-                }
-                else if (isUpperCase(squares[index - 17].piece.pieceType)) {
+                if (IsWhite(squares[index - 17].piece.pieceType)) {
                     potentialMoves.push(index - 17);
                 }
             }
         }
     }
+
+
+
     if (index + 16 <= 63) {
         if (squares[index + 16].position[0] !== 'H') {
-            if (isWhite) {
-                if (squares[index + 17].piece.pieceType === '') {
-                    potentialMoves.push(index + 17);
-                }
-                else if (!isUpperCase(squares[index + 17].piece.pieceType)) {
+            if (squares[index + 17].piece.pieceType === '') {
+                potentialMoves.push(index + 17);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index + 17].piece.pieceType)) {
                     potentialMoves.push(index + 17);
                 }
             }
             else {
-                if (squares[index + 17].piece.pieceType === '') {
-                    potentialMoves.push(index + 17);
-
-                }
-                else if (isUpperCase(squares[index + 17].piece.pieceType)) {
+                if (IsWhite(squares[index + 17].piece.pieceType)) {
                     potentialMoves.push(index + 17);
                 }
             }
         }
         if (squares[index + 16].position[0] !== 'A') {
-            if (isWhite) {
-                if (squares[index + 15].piece.pieceType === '') {
-                    potentialMoves.push(index + 15);
-                }
-                else if (!isUpperCase(squares[index + 15].piece.pieceType)) {
+            if (squares[index + 15].piece.pieceType === '') {
+                potentialMoves.push(index + 15);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index + 15].piece.pieceType)) {
                     potentialMoves.push(index + 15);
                 }
             }
             else {
-                if (squares[index + 15].piece.pieceType === '') {
-                    potentialMoves.push(index + 15);
-
-                }
-                else if (isUpperCase(squares[index + 15].piece.pieceType)) {
+                if (IsWhite(squares[index + 15].piece.pieceType)) {
                     potentialMoves.push(index + 15);
                 }
             }
         }
     }
+
+
     if (index - 8 >= 0) {
-        if (squares[index - 8].position[0] !== 'H') {
-            if (squares[index - 7].position[0] !== 'H') {
-                if (isWhite) {
-                    if (squares[index - 6].piece.pieceType === '') {
-                        potentialMoves.push(index - 6);
-                    }
-                    else if (!isUpperCase(squares[index - 6].piece.pieceType)) {
-                        potentialMoves.push(index - 6);
-                    }
+        if ((squares[index - 8].position[0] !== 'H') && (squares[index - 7].position[0] !== 'H')) {
+            if (squares[index - 6].piece.pieceType === '') {
+                potentialMoves.push(index - 6);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index - 6].piece.pieceType)) {
+                    potentialMoves.push(index - 6);
                 }
-                else {
-                    if (squares[index - 6].piece.pieceType === '') {
-                        potentialMoves.push(index - 6);
-
-                    }
-                    else if (isUpperCase(squares[index - 6].piece.pieceType)) {
-                        potentialMoves.push(index - 6);
-                    }
+            }
+            else {
+                if (IsWhite(squares[index - 6].piece.pieceType)) {
+                    potentialMoves.push(index - 6);
                 }
             }
         }
-        if (squares[index - 8].position[0] !== 'A') {
-            if (squares[index - 9].position[0] !== 'A') {
-                if (isWhite) {
-                    if (squares[index - 10].piece.pieceType === '') {
-                        potentialMoves.push(index - 10);
-                    }
-                    else if (!isUpperCase(squares[index - 10].piece.pieceType)) {
-                        potentialMoves.push(index - 10);
-                    }
-                }
-                else {
-                    if (squares[index - 10].piece.pieceType === '') {
-                        potentialMoves.push(index - 10);
 
-                    }
-                    else if (isUpperCase(squares[index - 10].piece.pieceType)) {
-                        potentialMoves.push(index - 10);
-                    }
+        if ((squares[index - 8].position[0] !== 'A') && (squares[index - 9].position[0] !== 'A')) {
+            if (squares[index - 10].piece.pieceType === '') {
+                potentialMoves.push(index - 10);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index - 10].piece.pieceType)) {
+                    potentialMoves.push(index - 10);
+                }
+            }
+            else {
+                if (IsWhite(squares[index - 10].piece.pieceType)) {
+                    potentialMoves.push(index - 10);
                 }
             }
         }
     }
-    if (index + 8 <= 63) {
-        if (squares[index + 8].position[0] !== 'A') {
-            if (squares[index + 7].position[0] !== 'A') {
-                if (isWhite) {
-                    if (squares[index + 6].piece.pieceType === '') {
-                        potentialMoves.push(index + 6);
-                    }
-                    else if (!isUpperCase(squares[index + 6].piece.pieceType)) {
-                        potentialMoves.push(index + 6);
-                    }
-                }
-                else {
-                    if (squares[index + 6].piece.pieceType === '') {
-                        potentialMoves.push(index + 6);
 
-                    }
-                    else if (isUpperCase(squares[index + 6].piece.pieceType)) {
-                        potentialMoves.push(index + 6);
-                    }
+    if (index + 8 <= 63) {
+        if ((squares[index + 8].position[0] !== 'A') && (squares[index + 7].position[0] !== 'A')) {
+            if (squares[index + 6].piece.pieceType === '') {
+                potentialMoves.push(index + 6);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index + 6].piece.pieceType)) {
+                    potentialMoves.push(index + 6);
+                }
+            }
+            else {
+                if (IsWhite(squares[index + 6].piece.pieceType)) {
+                    potentialMoves.push(index + 6);
                 }
             }
         }
-        if (squares[index + 8].position[0] !== 'H') {
-            if (squares[index + 9].position[0] !== 'H') {
-                if (isWhite) {
-                    if (squares[index + 10].piece.pieceType === '') {
-                        potentialMoves.push(index + 10);
-                    }
-                    else if (!isUpperCase(squares[index + 10].piece.pieceType)) {
-                        potentialMoves.push(index + 10);
-                    }
-                }
-                else {
-                    if (squares[index + 10].piece.pieceType === '') {
-                        potentialMoves.push(index + 10);
 
-                    }
-                    else if (isUpperCase(squares[index + 10].piece.pieceType)) {
-                        potentialMoves.push(index + 10);
-                    }
+        if ((squares[index + 8].position[0] !== 'H') && (squares[index + 9].position[0] !== 'H')) {
+            if (squares[index + 10].piece.pieceType === '') {
+                potentialMoves.push(index + 10);
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                
+                if (!IsWhite(squares[index + 10].piece.pieceType)) {
+                    potentialMoves.push(index + 10);
+                }
+            }
+            else {
+                if (IsWhite(squares[index + 10].piece.pieceType)) {
+                    potentialMoves.push(index + 10);
                 }
             }
         }
