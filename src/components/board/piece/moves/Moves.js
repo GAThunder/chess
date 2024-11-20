@@ -200,7 +200,7 @@ function MoveDirectional(
                 if (isJustThreaten) {
                     if (squares[moveTo].piece.pieceType === '') {
                         potentialMoves.push(moveTo);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, originalIndex, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                         potentialMoves.push(moveTo);
@@ -209,7 +209,7 @@ function MoveDirectional(
                 else {
                     if (squares[moveTo].piece.pieceType === '') {
                         AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, originalIndex, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                         AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
@@ -220,7 +220,7 @@ function MoveDirectional(
                 if (isJustThreaten) {
                     if (squares[moveTo].piece.pieceType === '') {
                         potentialMoves.push(moveTo);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, originalIndex, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                         potentialMoves.push(moveTo);
@@ -229,7 +229,7 @@ function MoveDirectional(
                 else {
                     if (squares[moveTo].piece.pieceType === '') {
                         AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, originalIndex, isJustThreaten, newFenArray);
                     }
                     else if (IsWhite(squares[moveTo].piece.pieceType)) {
                         AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
