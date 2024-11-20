@@ -39,7 +39,6 @@ function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
         return true;
     }
     else {
-        console.log(opponentPotentialMoves, kingIndex, squares)
         return false;
     }
 }

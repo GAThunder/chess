@@ -1,8 +1,4 @@
 import { ResetPassant } from "../../../Utilities/ResetPassant/ResetPassant";
-import { IsOnRightEdge } from "../../../Utilities/IsOnEdge/IsOnRightEdge";
-import { IsOnLeftEdge } from "../../../Utilities/IsOnEdge/IsOnLeftEdge";
-import { IsOnBottomEdge } from "../../../Utilities/IsOnEdge/IsOnBottomEdge";
-import { IsOnTopEdge } from "../../../Utilities/IsOnEdge/IsOnTopEdge";
 import { IsOnEdge } from "../../../Utilities/IsOnEdge/IsOnEdge";
 import { IsWhite } from "../../../Utilities/IsWhite/IsWhite";
 import { AddPotentialMove } from "../../../Utilities/AddPotentialMove/AddPotentialMove";
@@ -34,10 +30,10 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'R':
-            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true, index, isJustThreaten, newFenArray)
             break;
 
         case 'N':
@@ -45,32 +41,32 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'B':
-            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true, index, isJustThreaten, newFenArray)
             break;
 
         case 'Q':
-            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, true, index, isJustThreaten, newFenArray)
             break;
 
         case 'K':
-            MoveDirectional(squares, index, 0, 1, up, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, down, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, left, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, right, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, true, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, true, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, up, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, down, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, left, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, right, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, true, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, true, index, isJustThreaten, newFenArray)
             if (!isJustThreaten) {
                 Castle(squares, newFenArray, potentialMoves, true)
             }
@@ -89,10 +85,10 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'r':
-            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false, index, isJustThreaten, newFenArray)
             break;
 
         case 'n':
@@ -100,32 +96,32 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'b':
-            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false, index, isJustThreaten, newFenArray)
             break;
 
         case 'q':
-            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, up, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, down, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, left, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, right, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, upRight, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 8, downRight, potentialMoves, false, index, isJustThreaten, newFenArray)
             break;
 
         case 'k':
-            MoveDirectional(squares, index, 0, 1, up, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, down, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, left, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, right, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, false, isJustThreaten, newFenArray)
-            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, false, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, up, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, down, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, left, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, right, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, upLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, upRight, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, downLeft, potentialMoves, false, index, isJustThreaten, newFenArray)
+            MoveDirectional(squares, index, 0, 1, downRight, potentialMoves, false, index, isJustThreaten, newFenArray)
             if (!isJustThreaten) {
                 Castle(squares, newFenArray, potentialMoves, false)
             }
@@ -167,7 +163,30 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
 /* When it updates it checks like the piece is already on the adjacent square, need to update it so that the initial index stays the same
 If not when it passes, it tries to move the new index with the next viable spot, but that's just a blank space. */
 
-function MoveDirectional(squares, index, count, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten, newFenArray) {
+
+/* MoveDirectional, 
+Squares - passed in as a copy of the board from the Chess function
+index - the piece we're moving
+maxDepth - the board is only 8 by 8, can never go further, can restrict it down to 1 for king
+direction - where is the piece moving to
+potential moves - the array we're adding the potential moves to if they're valid
+original piece white - need to keep track of original color for recursion
+original index - makes sure the piece is being moved when we see if its checked, not an empty space
+isJustThreaten - if true, we don't need to see if it can be moved without causing check, just if the piece is threatening a space
+newFen Array - might need for checking other moves in recurrsion, not 100% sure why I added this in, I think maybe to check pawn moves */
+
+function MoveDirectional(
+    squares,
+    index,
+    count,
+    maxDepth,
+    direction,
+    potentialMoves,
+    originalPieceWhite,
+    originalIndex,
+    isJustThreaten,
+    newFenArray) {
+
     let moveTo = index + direction;
 
     let moveRight = false;
@@ -181,7 +200,7 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
                 if (isJustThreaten) {
                     if (squares[moveTo].piece.pieceType === '') {
                         potentialMoves.push(moveTo);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                         potentialMoves.push(moveTo);
@@ -189,11 +208,11 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
                 }
                 else {
                     if (squares[moveTo].piece.pieceType === '') {
-                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                        AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
-                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
                     }
                 }
             }
@@ -201,7 +220,7 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
                 if (isJustThreaten) {
                     if (squares[moveTo].piece.pieceType === '') {
                         potentialMoves.push(moveTo);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
                     }
                     else if (!IsWhite(squares[moveTo].piece.pieceType)) {
                         potentialMoves.push(moveTo);
@@ -209,11 +228,11 @@ function MoveDirectional(squares, index, count, maxDepth, direction, potentialMo
                 }
                 else {
                     if (squares[moveTo].piece.pieceType === '') {
-                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
-                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, isJustThreaten);
+                        AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, index, isJustThreaten, newFenArray);
                     }
                     else if (IsWhite(squares[moveTo].piece.pieceType)) {
-                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray);
+                        AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, originalPieceWhite, newFenArray);
                     }
                 }
             }
