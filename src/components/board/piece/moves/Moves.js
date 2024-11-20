@@ -222,7 +222,7 @@ function MoveDirectional(
                         potentialMoves.push(moveTo);
                         MoveDirectional(squares, moveTo, count + 1, maxDepth, direction, potentialMoves, originalPieceWhite, originalIndex, isJustThreaten, newFenArray);
                     }
-                    else if (!IsWhite(squares[moveTo].piece.pieceType)) {
+                    else if (IsWhite(squares[moveTo].piece.pieceType)) {
                         potentialMoves.push(moveTo);
                     }
                 }
