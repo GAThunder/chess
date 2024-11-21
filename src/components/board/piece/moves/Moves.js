@@ -37,7 +37,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'N':
-            KnightMove(squares, index, potentialMoves)
+            KnightMove(squares, index, potentialMoves, isJustThreaten)
             break;
 
         case 'B':
@@ -92,7 +92,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'n':
-            KnightMove(squares, index, potentialMoves)
+            KnightMove(squares, index, potentialMoves, isJustThreaten)
             break;
 
         case 'b':
@@ -242,7 +242,7 @@ function MoveDirectional(
     return -1;
 }
 
-function KnightMove(squares, index, potentialMoves) {
+function KnightMove(squares, index, potentialMoves, isJustThreaten) {
     if (index - 16 >= 0) {
         if (squares[index - 16].position[0] !== 'H') {
             if (squares[index - 15].piece.pieceType === '') {
@@ -276,8 +276,6 @@ function KnightMove(squares, index, potentialMoves) {
         }
     }
 
-
-
     if (index + 16 <= 63) {
         if (squares[index + 16].position[0] !== 'H') {
             if (squares[index + 17].piece.pieceType === '') {
@@ -310,7 +308,6 @@ function KnightMove(squares, index, potentialMoves) {
             }
         }
     }
-
 
     if (index - 8 >= 0) {
         if ((squares[index - 8].position[0] !== 'H') && (squares[index - 7].position[0] !== 'H')) {
@@ -367,8 +364,7 @@ function KnightMove(squares, index, potentialMoves) {
             if (squares[index + 10].piece.pieceType === '') {
                 potentialMoves.push(index + 10);
             }
-            if (IsWhite(squares[index].piece.pieceType)) {
-                
+            if (IsWhite(squares[index].piece.pieceType)) {               
                 if (!IsWhite(squares[index + 10].piece.pieceType)) {
                     potentialMoves.push(index + 10);
                 }
