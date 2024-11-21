@@ -20,10 +20,10 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
         case 'P':
             if (!isJustThreaten) {
                 if (!squares[index].piece.hasMoved) {
-                    PawnMoveUp(squares, index, 0, 2, potentialMoves, true)
+                    PawnMoveUp(squares, index, 0, 2, potentialMoves, true, isJustThreaten, newFenArray)
                 }
                 else {
-                    PawnMoveUp(squares, index, 0, 1, potentialMoves, true)
+                    PawnMoveUp(squares, index, 0, 1, potentialMoves, true, isJustThreaten, newFenArray)
                 }
             }
             PawnTake(squares, index, potentialMoves, true, isJustThreaten, newFenArray)
@@ -588,24 +588,24 @@ function PawnTake(squares, index, potentialMoves, originalPieceWhite, isJustThre
     return -1;
 }
 
-function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPieceWhite) {
+function PawnMoveUp(squares, index, count, maxDepth, potentialMoves, originalPieceWhite, isJustThreaten, newFenArray) {
     let moveTo = index + up;
     if (count < maxDepth) {
         if (moveTo >= 0) {
             if (originalPieceWhite) {
                 if (squares[moveTo].piece.pieceType === '') {
-                    potentialMoves.push(moveTo);
-                    PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
-                }
-            }
-            else {
-                if (squares[moveTo].piece.pieceType === '') {
-                    potentialMoves.push(moveTo);
-                    PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite);
+                    if (isJustThreaten) {
+                        potentialMoves.push(moveTo);
+                        PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite, isJustThreaten, newFenArray);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, moveTo, potentialMoves, originalPieceWhite, newFenArray)
+                        PawnMoveUp(squares, moveTo, count + 1, maxDepth, potentialMoves, originalPieceWhite, isJustThreaten, newFenArray);
+                    }
+                    
                 }
             }
         }
-
     }
     return -1;
 }
