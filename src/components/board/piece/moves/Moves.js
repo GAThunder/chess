@@ -26,7 +26,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
                     PawnMoveUp(squares, index, 0, 1, potentialMoves, true)
                 }
             }
-            PawnTake(squares, index, potentialMoves)
+            PawnTake(squares, index, potentialMoves, true, isJustThreaten, newFenArray)
             break;
 
         case 'R':
@@ -81,7 +81,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
                     PawnMoveDown(squares, index, 0, 1, potentialMoves, true)
                 }
             }
-            PawnTake(squares, index, potentialMoves)
+            PawnTake(squares, index, potentialMoves, false, isJustThreaten, newFenArray)
             break;
 
         case 'r':
@@ -499,25 +499,45 @@ function KnightMove(squares, index, potentialMoves, isJustThreaten, originalPiec
     return -1;
 }
 
-function PawnTake(squares, index, potentialMoves) {
+function PawnTake(squares, index, potentialMoves, originalPieceWhite, isJustThreaten, newFenArray) {
     if (IsWhite(squares[index].piece.pieceType)) {
         if (squares[index].position[0] !== 'A') {
             if (index - 9 >= 0) {
                 if (!IsWhite(squares[index - 9].piece.pieceType)) {
-                    potentialMoves.push(index - 9);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 9);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 9, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             if (squares[index - 1].piece.potentialPassant) {
-                potentialMoves.push(index - 9);
+                if (isJustThreaten) {
+                    potentialMoves.push(index - 9);
+                }
+                else {
+                    AddPotentialMove(squares, index, index - 9, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
         }
         if (squares[index].position[0] !== 'H') {
             if (index - 7 >= 0) {
                 if (!IsWhite(squares[index - 7].piece.pieceType)) {
-                    potentialMoves.push(index - 7);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 7);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 7, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
                 if (squares[index + 1].piece.potentialPassant) {
-                    potentialMoves.push(index - 7);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 7);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 7, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
@@ -527,20 +547,40 @@ function PawnTake(squares, index, potentialMoves) {
         if (squares[index].position[0] !== 'A') {
             if (index + 7 <= 63) {
                 if (IsWhite(squares[index + 7].piece.pieceType) && squares[index + 7].piece.pieceType !== '') {
-                    potentialMoves.push(index + 7);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 7);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 7, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
                 if (squares[index - 1].piece.potentialPassant) {
-                    potentialMoves.push(index + 7);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 7);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 7, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
         if (squares[index].position[0] !== 'H') {
             if (index + 9 <= 63) {
                 if (IsWhite(squares[index + 9].piece.pieceType) && squares[index + 9].piece.pieceType !== '') {
-                    potentialMoves.push(index + 9);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 9);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 9, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
                 if (squares[index + 1].piece.potentialPassant) {
-                    potentialMoves.push(index + 9);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 9);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 9, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
