@@ -2,6 +2,9 @@ import { ResetPassant } from "../../../Utilities/ResetPassant/ResetPassant";
 import { IsOnEdge } from "../../../Utilities/IsOnEdge/IsOnEdge";
 import { IsWhite } from "../../../Utilities/IsWhite/IsWhite";
 import { AddPotentialMove } from "../../../Utilities/AddPotentialMove/AddPotentialMove";
+import { OpponentThreatens } from "../../../Utilities/OpponentThreatens/OpponenetThreatens";
+import { ResetThreatenedSquares } from "../../../Utilities/SetThreatenedSquares/ResetThreatenedSquares";
+import { SetThreatenedSquares } from "../../../Utilities/SetThreatenedSquares/SetThreatenedSquares";
 
 /* Moves functions. Pawns, Knights, and Castling needs unique functions due to their special properties. */
 
@@ -153,6 +156,15 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
     newSquares[index].piece.hasMoved = true;
     newSquares[selectedPiece].piece.pieceType = '';
     newSquares[selectedPiece].piece.hasMoved = true;
+
+    let blackThreatens = [];
+    let whiteThreatens = [];
+
+    OpponentThreatens(newSquares, newFenArray, true, blackThreatens);
+    OpponentThreatens(newSquares, newFenArray, false, whiteThreatens);// check to see which spaces the other color is threatening and load it into arrays.
+    ResetThreatenedSquares(newSquares);
+    SetThreatenedSquares(newSquares, blackThreatens);
+    SetThreatenedSquares(newSquares, whiteThreatens);
 
     if (newFenArray[2] !== '-' && newFenArray[3] !== '-') {
         updateCastle(newSquares, newFenArray);
