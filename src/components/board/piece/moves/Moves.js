@@ -500,12 +500,10 @@ function KnightMove(squares, index, potentialMoves, isJustThreaten, originalPiec
 }
 
 function PawnTake(squares, index, potentialMoves) {
-    const isUpperCase = str => str === (str.toUpperCase());
-    let isWhite = isUpperCase(squares[index].piece.pieceType)
-    if (isWhite) {
+    if (IsWhite(squares[index].piece.pieceType)) {
         if (squares[index].position[0] !== 'A') {
             if (index - 9 >= 0) {
-                if (!isUpperCase(squares[index - 9].piece.pieceType)) {
+                if (!IsWhite(squares[index - 9].piece.pieceType)) {
                     potentialMoves.push(index - 9);
                 }
             }
@@ -515,7 +513,7 @@ function PawnTake(squares, index, potentialMoves) {
         }
         if (squares[index].position[0] !== 'H') {
             if (index - 7 >= 0) {
-                if (!isUpperCase(squares[index - 7].piece.pieceType)) {
+                if (!IsWhite(squares[index - 7].piece.pieceType)) {
                     potentialMoves.push(index - 7);
                 }
                 if (squares[index + 1].piece.potentialPassant) {
@@ -528,7 +526,7 @@ function PawnTake(squares, index, potentialMoves) {
     else {
         if (squares[index].position[0] !== 'A') {
             if (index + 7 <= 63) {
-                if (isUpperCase(squares[index + 7].piece.pieceType) && squares[index + 7].piece.pieceType !== '') {
+                if (IsWhite(squares[index + 7].piece.pieceType) && squares[index + 7].piece.pieceType !== '') {
                     potentialMoves.push(index + 7);
                 }
                 if (squares[index - 1].piece.potentialPassant) {
@@ -538,7 +536,7 @@ function PawnTake(squares, index, potentialMoves) {
         }
         if (squares[index].position[0] !== 'H') {
             if (index + 9 <= 63) {
-                if (isUpperCase(squares[index + 9].piece.pieceType) && squares[index + 9].piece.pieceType !== '') {
+                if (IsWhite(squares[index + 9].piece.pieceType) && squares[index + 9].piece.pieceType !== '') {
                     potentialMoves.push(index + 9);
                 }
                 if (squares[index + 1].piece.potentialPassant) {
