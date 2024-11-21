@@ -37,7 +37,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'N':
-            KnightMove(squares, index, potentialMoves, isJustThreaten)
+            KnightMove(squares, index, potentialMoves, isJustThreaten, true, newFenArray)
             break;
 
         case 'B':
@@ -92,7 +92,7 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
             break;
 
         case 'n':
-            KnightMove(squares, index, potentialMoves, isJustThreaten)
+            KnightMove(squares, index, potentialMoves, isJustThreaten, false, newFenArray)
             break;
 
         case 'b':
@@ -242,35 +242,65 @@ function MoveDirectional(
     return -1;
 }
 
-function KnightMove(squares, index, potentialMoves, isJustThreaten) {
+function KnightMove(squares, index, potentialMoves, isJustThreaten, originalPieceWhite, newFenArray) {
     if (index - 16 >= 0) {
         if (squares[index - 16].position[0] !== 'H') {
             if (squares[index - 15].piece.pieceType === '') {
-                potentialMoves.push(index - 15);
+                if (isJustThreaten) {
+                    potentialMoves.push(index - 15);
+                }
+                else {
+                    AddPotentialMove(squares, index, index - 15, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index - 15].piece.pieceType)) {
-                    potentialMoves.push(index - 15);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 15);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 15, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index - 15].piece.pieceType)) {
-                    potentialMoves.push(index - 15);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 15);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 15, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
         if (squares[index - 16].position[0] !== 'A') {
             if (squares[index - 17].piece.pieceType === '') {
-                potentialMoves.push(index - 17);
+                if (isJustThreaten) {
+                    potentialMoves.push(index - 17);
+                }
+                else {
+                    AddPotentialMove(squares, index, index - 17, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index - 17].piece.pieceType)) {
-                    potentialMoves.push(index - 17);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 17);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 17, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index - 17].piece.pieceType)) {
-                    potentialMoves.push(index - 17);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 17);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 17, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
@@ -279,31 +309,61 @@ function KnightMove(squares, index, potentialMoves, isJustThreaten) {
     if (index + 16 <= 63) {
         if (squares[index + 16].position[0] !== 'H') {
             if (squares[index + 17].piece.pieceType === '') {
-                potentialMoves.push(index + 17);
+                if (isJustThreaten) {
+                    potentialMoves.push(index + 17);
+                }
+                else {
+                    AddPotentialMove(squares, index, index + 17, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index + 17].piece.pieceType)) {
-                    potentialMoves.push(index + 17);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 17);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 17, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index + 17].piece.pieceType)) {
-                    potentialMoves.push(index + 17);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 17);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 17, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
         if (squares[index + 16].position[0] !== 'A') {
             if (squares[index + 15].piece.pieceType === '') {
-                potentialMoves.push(index + 15);
+                if (isJustThreaten) {
+                    potentialMoves.push(index + 15);
+                }
+                else {
+                    AddPotentialMove(squares, index, index + 15, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index + 15].piece.pieceType)) {
-                    potentialMoves.push(index + 15);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 15);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 15, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index + 15].piece.pieceType)) {
-                    potentialMoves.push(index + 15);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 15);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 15, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
@@ -312,32 +372,62 @@ function KnightMove(squares, index, potentialMoves, isJustThreaten) {
     if (index - 8 >= 0) {
         if ((squares[index - 8].position[0] !== 'H') && (squares[index - 7].position[0] !== 'H')) {
             if (squares[index - 6].piece.pieceType === '') {
-                potentialMoves.push(index - 6);
+                if (isJustThreaten) {
+                    potentialMoves.push(index - 6);
+                }
+                else {
+                    AddPotentialMove(squares, index, index - 6, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index - 6].piece.pieceType)) {
-                    potentialMoves.push(index - 6);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 6);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 6, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index - 6].piece.pieceType)) {
-                    potentialMoves.push(index - 6);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 6);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 6, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
 
         if ((squares[index - 8].position[0] !== 'A') && (squares[index - 9].position[0] !== 'A')) {
             if (squares[index - 10].piece.pieceType === '') {
-                potentialMoves.push(index - 10);
+                if (isJustThreaten) {
+                    potentialMoves.push(index - 10);
+                }
+                else {
+                    AddPotentialMove(squares, index, index - 10, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index - 10].piece.pieceType)) {
-                    potentialMoves.push(index - 10);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 10);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 10, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index - 10].piece.pieceType)) {
-                    potentialMoves.push(index - 10);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index - 10);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index - 10, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
@@ -346,32 +436,62 @@ function KnightMove(squares, index, potentialMoves, isJustThreaten) {
     if (index + 8 <= 63) {
         if ((squares[index + 8].position[0] !== 'A') && (squares[index + 7].position[0] !== 'A')) {
             if (squares[index + 6].piece.pieceType === '') {
-                potentialMoves.push(index + 6);
+                if (isJustThreaten) {
+                    potentialMoves.push(index + 6);
+                }
+                else {
+                    AddPotentialMove(squares, index, index + 6, potentialMoves, originalPieceWhite, newFenArray)
+                }
             }
             if (IsWhite(squares[index].piece.pieceType)) {
                 if (!IsWhite(squares[index + 6].piece.pieceType)) {
-                    potentialMoves.push(index + 6);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 6);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 6, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index + 6].piece.pieceType)) {
-                    potentialMoves.push(index + 6);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 6);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 6, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
 
         if ((squares[index + 8].position[0] !== 'H') && (squares[index + 9].position[0] !== 'H')) {
             if (squares[index + 10].piece.pieceType === '') {
-                potentialMoves.push(index + 10);
-            }
-            if (IsWhite(squares[index].piece.pieceType)) {               
-                if (!IsWhite(squares[index + 10].piece.pieceType)) {
+                if (isJustThreaten) {
                     potentialMoves.push(index + 10);
+                }
+                else {
+                    AddPotentialMove(squares, index, index + 10, potentialMoves, originalPieceWhite, newFenArray)
+                }
+            }
+            if (IsWhite(squares[index].piece.pieceType)) {
+                if (!IsWhite(squares[index + 10].piece.pieceType)) {
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 10);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 10, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
             else {
                 if (IsWhite(squares[index + 10].piece.pieceType)) {
-                    potentialMoves.push(index + 10);
+                    if (isJustThreaten) {
+                        potentialMoves.push(index + 10);
+                    }
+                    else {
+                        AddPotentialMove(squares, index, index + 10, potentialMoves, originalPieceWhite, newFenArray)
+                    }
                 }
             }
         }
