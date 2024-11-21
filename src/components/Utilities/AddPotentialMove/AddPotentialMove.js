@@ -1,4 +1,4 @@
-import { OpponentPotentialMoves } from "../OpponentPotentialMoves/OpponentPotentialMoves";
+import { WouldCauseCheck } from "../WouldCauseCheck/WouldCauseCheck";
 import { CopyBoard } from "../CopyBoard/CopyBoard";
 
 //This generates a fake board, and on that board it makes each move to see if it would put the player in check, or if its valid to add as an option
@@ -21,7 +21,7 @@ function AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, origin
 
     console.log(originalIndex, moveTo, tempSquares)
 
-    if (OpponentPotentialMoves(tempSquares, newFenArray, originalPieceWhite) === false) {
+    if (WouldCauseCheck(tempSquares, newFenArray, originalPieceWhite) === false) {
         potentialMoves.push(moveTo);
     }
 }

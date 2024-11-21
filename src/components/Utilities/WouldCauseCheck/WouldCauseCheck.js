@@ -4,7 +4,7 @@ import { IsWhite } from "../IsWhite/IsWhite";
 /*This is supposed to get an array containing all the squares the other player is threatening, and see if after making a mock move, 
 if that move is valid, or if it would put the king in check */
 
-function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
+function WouldCauseCheck(squares, newFenArray, originalPieceWhite) {
     let opponentPotentialMoves = [];
     if (originalPieceWhite) {
         var kingIndex = LocateKing(squares, true)
@@ -43,4 +43,4 @@ function OpponentPotentialMoves(squares, newFenArray, originalPieceWhite) {
     }
 }
 
-export { OpponentPotentialMoves };
+export { WouldCauseCheck };
