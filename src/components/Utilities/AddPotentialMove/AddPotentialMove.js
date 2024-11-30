@@ -19,8 +19,6 @@ function AddPotentialMove(squares, originalIndex, moveTo, potentialMoves, origin
     tempSquares[originalIndex].piece.pieceType = '';
     tempSquares[originalIndex].piece.hasMoved = true;
 
-    console.log(originalIndex, moveTo, tempSquares)
-
     if (WouldCauseCheck(tempSquares, newFenArray, originalPieceWhite) === false) {
         potentialMoves.push(moveTo);
     }

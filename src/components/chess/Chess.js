@@ -7,6 +7,9 @@ import { PotentialMoves, MovePiece, } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
 import { UpdateTurn } from '../Utilities/UpdateTurn/UpdateTurn.js';
 import { CopyBoard } from '../Utilities/CopyBoard/CopyBoard.js';
+import { AnyPotentialMoves } from '../Utilities/AnyPotentialMoves/AnyPotentialMoves.js';
+import { PromoteModal } from '../modals/PromoteModal/PromoteModal.js';
+import { CheckPromotion } from '../Utilities/CheckPromotion/CheckPromotion.js';
 
 
 function Chess() {
@@ -19,6 +22,11 @@ function Chess() {
   const yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
   let xSquare = 0;
   let startingSquares = []
+
+  const [disablePromoteModal, setDisablePromoteModal] = useState(true);
+  const [disableGameOverModal, setDisableGameOverModal] = useState(true);
+  
+  const [promotionIndex, setPromotionIndex] = useState(-1);
 
   const [selectedPiece, setSelectedPiece] = useState(-1); // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
@@ -76,6 +84,8 @@ function Chess() {
     else {
       turn = "Black";
     }
+    var blackMoves = [];
+    var whiteMoves = [];
   
     const colorPiece = pieceName.split(' '); //colorPiece is an array. 0 is the color, 1 is the piece
     let potentialMoves = [];
@@ -101,6 +111,24 @@ function Chess() {
         let newFenArray = fen;
         UnHighlightPieces(newSquares);
         MovePiece(newSquares, index, selectedPiece, newFenArray);
+        /*After move piece, see if pawn can be promotion, then after promotion check for game over.
+        TODO: should all this be in the move function itself? With the modal being ASYNC I want to make sure
+        everything is in order.
+        
+        */
+        if(CheckPromotion(newSquares, fen[1]) !== -1) {
+          setPromotionIndex(CheckPromotion(newSquares, fen[1]));
+          setDisablePromoteModal(false);
+        }
+        
+        AnyPotentialMoves(newSquares, newFenArray, true, whiteMoves);
+        AnyPotentialMoves(newSquares, newFenArray, false, blackMoves);
+        if (turn === "White" && blackMoves.length === 0) {
+          console.log("Game Over")
+        }
+        else if (turn === "Black" && whiteMoves.length === 0) {
+          console.log("Game Over")
+        }
         setSquares(newSquares);
         setSelectedPiece(-1);
         newFenArray[0] = GetCurrentFen(newSquares);
@@ -125,30 +153,29 @@ function Chess() {
     }
     
   }
-
-  const updateFEN = (e) => {
-    setChangedFEN(e.target.value);
+  //TODO fully set up promote piece function
+  const promotePiece = (squares, promotedToPiece, promotionIndex) => {
+      squares[promotionIndex].piece.pieceType = promotedToPiece;
+      setSquares(squares);
+      setDisablePromoteModal(true);
+      setPromotionIndex(-1);
   }
-
-  const submitFEN = () => { // maybe use effect to stop double load
-    let newFenArray = fen;
-    newFenArray[0] = changedFEN;
-    setFen(newFenArray);
-    let updatedSquares = [...startingSquares]
-    setSquares(updatedSquares);
-  }
-
-  const [changedFEN, setChangedFEN] = useState();
 
   return <div className={classes.Chess}>
     <div className={classes.FEN_display}>
-      <span className={classes.Input_Line}><p>Input FEN String:</p><input type="text" value={changedFEN} onChange={updateFEN}></input></span><button onClick={submitFEN}>Update</button>
       <p>Current FEN is: {fen[0]} {fen[1]} {fen[2]}{fen[3]} {fen[4]}</p>
     </div>
     <Board
       key={fen}
       squares={squares}
       selectPiece={selectPiece}
+    />
+    <PromoteModal 
+      disablePromoteModal={disablePromoteModal}
+      promoteWhite={fen[1]}
+      promotePiece={promotePiece}
+      promotionIndex = {promotionIndex}
+      squares={squares}
     />
   </div>;
 }

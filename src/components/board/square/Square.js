@@ -18,92 +18,92 @@ function Square(props) {
   const [pieceURL, setPieceURL] = useState('');
   const [pieceName, setPieceName] = useState('');
 
- useEffect(()=> {  //if I don't useEffect here, it sets the state, which updates the component, which tries to setState again, making an endless loop.
-  switch (props.piece) {
-    case 'p' :
-      setPieceURL(blackPawn);
-      setPieceName('Black Pawn');
-      break; 
+  useEffect(() => {  //if I don't useEffect here, it sets the state, which updates the component, which tries to setState again, making an endless loop.
+    switch (props.piece) {
+      case 'p':
+        setPieceURL(blackPawn);
+        setPieceName('Black Pawn');
+        break;
 
-      case 'n' :
-      setPieceURL(blackKnight);
-      setPieceName('Black Knight');
-      break; 
+      case 'n':
+        setPieceURL(blackKnight);
+        setPieceName('Black Knight');
+        break;
 
-      case 'b' :
-      setPieceURL(blackBishop);
-      setPieceName('Black Bishop');
-      break; 
+      case 'b':
+        setPieceURL(blackBishop);
+        setPieceName('Black Bishop');
+        break;
 
-      case 'r' :
-      setPieceURL(blackRook);
-      setPieceName('Black Rook');
-      break; 
+      case 'r':
+        setPieceURL(blackRook);
+        setPieceName('Black Rook');
+        break;
 
-      case 'q' :
-      setPieceURL(blackQueen);
-      setPieceName('Black Queen');
-      break; 
+      case 'q':
+        setPieceURL(blackQueen);
+        setPieceName('Black Queen');
+        break;
 
-      case 'k' :
-      setPieceURL(blackKing);
-      setPieceName('Black King');
-      break; 
+      case 'k':
+        setPieceURL(blackKing);
+        setPieceName('Black King');
+        break;
 
-      case 'P' :
-      setPieceURL(whitePawn);
-      setPieceName('White Pawn');
-      break; 
+      case 'P':
+        setPieceURL(whitePawn);
+        setPieceName('White Pawn');
+        break;
 
-      case 'N' :
-      setPieceURL(whiteKnight);
-      setPieceName('White Knight');
-      break; 
+      case 'N':
+        setPieceURL(whiteKnight);
+        setPieceName('White Knight');
+        break;
 
-      case 'B' :
-      setPieceURL(whiteBishop);
-      setPieceName('White Bishop');
-      break; 
+      case 'B':
+        setPieceURL(whiteBishop);
+        setPieceName('White Bishop');
+        break;
 
-      case 'R' :
-      setPieceURL(whiteRook);
-      setPieceName('White Rook');
-      break; 
+      case 'R':
+        setPieceURL(whiteRook);
+        setPieceName('White Rook');
+        break;
 
-      case 'Q' :
-      setPieceURL(whiteQueen);
-      setPieceName('White Queen');
-      break; 
+      case 'Q':
+        setPieceURL(whiteQueen);
+        setPieceName('White Queen');
+        break;
 
-      case 'K' :
-      setPieceURL(whiteKing);
-      setPieceName('White King');
-      break; 
+      case 'K':
+        setPieceURL(whiteKing);
+        setPieceName('White King');
+        break;
 
-      default :
+      default:
+        break;
+    }
+  }, [props])
+
+  let backgroundColor = null;
+  //if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
+
+  switch (props.highlighted) {
+    case true:
+      backgroundColor = classes.highlighted
+      break;
+
+    case false:
+      (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
       break;
   }
- }, [props]) 
-
- let backgroundColor = null;
- //if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
-     
- switch (props.highlighted) {
-   case true: 
-   backgroundColor = classes.highlighted
-   break;
-
-   case false: 
-   (props.number % 2 == 0) ? backgroundColor = classes.white : backgroundColor = classes.black
-   break;
- }
 
   return <div key={props.piece}
-  onClick={() => props.selectPiece(pieceName, props.index)}
-  className={backgroundColor}
-        >
-          {props.piece != '' && <img src={pieceURL} alt={pieceName} number={props.number}/>}
-        </div>;
+    onClick={() => props.selectPiece(pieceName, props.index)}
+    className={backgroundColor}
+  >
+    {props.piece !== '' && <img src={pieceURL} alt={pieceName} number={props.number} />}
+  </div>;
 }
 
 export default Square;
