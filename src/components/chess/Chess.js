@@ -1,7 +1,6 @@
 import React, {useState } from 'react';
 import Board from '../board/Board';
 import classes from './Chess.module.css';
-import Piece from '../board/piece/Piece.js';
 import GetCurrentFen from '../board/GetCurrentFen/GetCurrentFen';
 import { PotentialMoves, MovePiece, } from '../board/piece/moves/Moves.js';
 import { HighlightPieces, UnHighlightPieces } from '../Utilities/HighlightPieces/HighlightPieces.js';
@@ -10,17 +9,15 @@ import { CopyBoard } from '../Utilities/CopyBoard/CopyBoard.js';
 import { AnyPotentialMoves } from '../Utilities/AnyPotentialMoves/AnyPotentialMoves.js';
 import { PromoteModal } from '../modals/PromoteModal/PromoteModal.js';
 import { CheckPromotion } from '../Utilities/CheckPromotion/CheckPromotion.js';
+import { GameOverModal } from '../modals/GameOverModal/GameOverModal.js';
+import { ResetBoard } from '../Utilities/ResetBoard/ResetBoard.js';
 
 
 function Chess() {
-  const [fen, setFen] = useState(['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQ','kq', '-']); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
+  const initialFen = ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', 'w', 'KQ','kq', '-']
+  const [fen, setFen] = useState(initialFen); // initialize the FEN, and put it an an array, 0 is the positions, 1 is who's turn
   // 2 is who can castle, 3 is if there is an en passent available
 
-  const fenPosition = fen[0]; // Take just the part that positions the pieces
-  const fenPiecePosition = fenPosition.split('/'); // break it down into an array, row by row for when its set.
-  const xAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']; //Set the rows and files for assigning each squares position
-  const yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
-  let xSquare = 0;
   let startingSquares = []
 
   const [disablePromoteModal, setDisablePromoteModal] = useState(true);
@@ -30,47 +27,13 @@ function Chess() {
 
   const [selectedPiece, setSelectedPiece] = useState(-1); // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
+  ResetBoard(startingSquares);
 
-  for (let y = 0; y < fenPiecePosition.length; y++) { //this sets the initial FEN, and loads it all into a dummy array, before setting the state, so it doesn't load endlessly
-    for (let x = 0; x < fenPiecePosition[y].length; x++) {
-
-      if (Number(fenPiecePosition[y][x])) {
-        for (let i = 0; i < fenPiecePosition[y][x]; i++) {
-          let number = xSquare + y;
-          const piece = new Piece('')
-          startingSquares.push({
-            piece,
-            number: number,
-            position: xAxis[xSquare] + yAxis[y],
-            highlighted: false,
-          })
-          if (xSquare !== 7) {
-            xSquare++;
-          }
-          else {
-            xSquare = 0;
-          }
-        }
-      }
-      else {
-        let number = xSquare + y;
-        const piece = new Piece(fenPiecePosition[y][x])
-        startingSquares.push({
-          piece,
-          number: number,
-          position: xAxis[xSquare] + yAxis[y],
-          highlighted: false,
-        })
-        if (xSquare !== 7) {
-          xSquare++;
-        }
-        else {
-          xSquare = 0;
-        }
-      }
-    }
+  const resetGame = () => {
+    setSquares(startingSquares);
+    setFen(initialFen);
+    setDisableGameOverModal(true);
   }
-
   const [squares, setSquares] = useState([...startingSquares]);
   // need 2 paths in the function, depending on if a piece is selected. 
   //The first should select the piece, and highlight valid moves, if not a valid piece, alert the player
@@ -124,10 +87,10 @@ function Chess() {
         AnyPotentialMoves(newSquares, newFenArray, true, whiteMoves);
         AnyPotentialMoves(newSquares, newFenArray, false, blackMoves);
         if (turn === "White" && blackMoves.length === 0) {
-          console.log("Game Over")
+          setDisableGameOverModal(false);
         }
         else if (turn === "Black" && whiteMoves.length === 0) {
-          console.log("Game Over")
+          setDisableGameOverModal(false);
         }
         setSquares(newSquares);
         setSelectedPiece(-1);
@@ -176,6 +139,10 @@ function Chess() {
       promotePiece={promotePiece}
       promotionIndex = {promotionIndex}
       squares={squares}
+    />
+    <GameOverModal
+    disableGameOverModal={disableGameOverModal}
+    resetGame={resetGame}
     />
   </div>;
 }

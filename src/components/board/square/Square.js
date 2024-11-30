@@ -96,6 +96,10 @@ function Square(props) {
     case false:
       (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
       break;
+
+      default: 
+      console.log("error in square switch")
+      break;
   }
 
   return <div key={props.piece}
