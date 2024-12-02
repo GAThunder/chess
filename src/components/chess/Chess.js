@@ -11,6 +11,7 @@ import { PromoteModal } from '../modals/PromoteModal/PromoteModal.js';
 import { CheckPromotion } from '../Utilities/CheckPromotion/CheckPromotion.js';
 import { GameOverModal } from '../modals/GameOverModal/GameOverModal.js';
 import { ResetBoard } from '../Utilities/ResetBoard/ResetBoard.js';
+import { CurrentPoints } from '../Utilities/CurrentPoints/CurrentPoints.js';
 
 
 function Chess() {
@@ -27,7 +28,7 @@ function Chess() {
 
   const [selectedPiece, setSelectedPiece] = useState(-1); // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
-  ResetBoard(startingSquares);
+  ResetBoard(startingSquares); //initializes board
 
   const resetGame = () => {
     setSquares(startingSquares);
@@ -74,11 +75,7 @@ function Chess() {
         let newFenArray = fen;
         UnHighlightPieces(newSquares);
         MovePiece(newSquares, index, selectedPiece, newFenArray);
-        /*After move piece, see if pawn can be promotion, then after promotion check for game over.
-        TODO: should all this be in the move function itself? With the modal being ASYNC I want to make sure
-        everything is in order.
-        
-        */
+       
         if(CheckPromotion(newSquares, fen[1]) !== -1) {
           setPromotionIndex(CheckPromotion(newSquares, fen[1]));
           setDisablePromoteModal(false);
@@ -97,6 +94,7 @@ function Chess() {
         newFenArray[0] = GetCurrentFen(newSquares);
         UpdateTurn(newFenArray);
         setFen(newFenArray);
+        console.log(CurrentPoints(newSquares));
       }
 
       else if (turn === colorPiece[0]) {
@@ -116,7 +114,7 @@ function Chess() {
     }
     
   }
-  //TODO fully set up promote piece function
+  
   const promotePiece = (squares, promotedToPiece, promotionIndex) => {
       squares[promotionIndex].piece.pieceType = promotedToPiece;
       setSquares(squares);
