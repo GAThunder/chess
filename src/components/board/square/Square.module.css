@@ -1,26 +1,24 @@
 .black {
-    height: 68px;
-    width: 68px;
+    height: 12.5%;
+    width: 12.5%;
     background-color: #769656;
     display: inline-flex;
     justify-content: center;
     align-content: center;
-    border: 1px solid black;
 }
 
 .white {
-    height: 68px;
-    width: 68px;
+    height: 12.5%;
+    width: 12.5%;
     background-color: #eeeed2;
     display: inline-flex;
     justify-content: center;
     align-content: center;
-    border: 1px solid black;
 }
 
 .highlighted {
-    height: 70px;
-    width: 70px;
+    height: 12.5%;
+    width: 12.5%;
     background-color: #2e312c;
     display: inline-flex;
     justify-content: center;

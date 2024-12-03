@@ -22,19 +22,19 @@ class Piece {
                 return 100000;
             case 'q':
             case 'Q':
-                return 900;
+                return 9;
             case 'n':
             case 'N':
-                return 300;
+                return 3;
             case 'b':
             case 'B':
-                return 300;
+                return 3;
             case 'r':
             case 'R':
-                return 500;
+                return 5;
             case 'p':
             case 'P':
-                return 100;
+                return 1;
             default :
             return 0;
         }

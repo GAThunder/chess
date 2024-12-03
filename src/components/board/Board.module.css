@@ -1,7 +1,7 @@
 .Board {
     display: inline-flex;
-    height: 560px;
-    width: 560px;
+    height: 35em;
+    width: 35em;
     background-color: green;
     margin: auto;
     border: none;
