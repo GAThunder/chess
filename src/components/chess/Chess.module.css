@@ -15,10 +15,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 p {
     font-weight: bold;
+    white-space: no-wrap;
 }
 
 img {

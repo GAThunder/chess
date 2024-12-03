@@ -163,8 +163,12 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
     OpponentThreatens(newSquares, newFenArray, true, blackThreatens);
     OpponentThreatens(newSquares, newFenArray, false, whiteThreatens);// check to see which spaces the other color is threatening and load it into arrays.
     ResetThreatenedSquares(newSquares);
-    SetThreatenedSquares(newSquares, blackThreatens);
-    SetThreatenedSquares(newSquares, whiteThreatens);
+    if (newFenArray[1] === 'b') {
+        SetThreatenedSquares(newSquares, blackThreatens);
+    }
+    else {
+        SetThreatenedSquares(newSquares, whiteThreatens);
+    }
 
     if (newFenArray[2] !== '-' && newFenArray[3] !== '-') {
         updateCastle(newSquares, newFenArray);

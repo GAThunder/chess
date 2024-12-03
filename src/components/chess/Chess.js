@@ -89,7 +89,6 @@ function Chess() {
           setDisableGameOverModal(false);
         }
         setWhiteBarPercentage(PointsBar(newSquares));
-        console.log(whiteBarPercentage, whiteBarStyling);
         setSquares(newSquares);
         setSelectedPiece(-1);
         newFenArray[0] = GetCurrentFen(newSquares);
