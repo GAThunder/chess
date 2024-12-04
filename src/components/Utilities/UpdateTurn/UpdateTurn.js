@@ -1,5 +1,5 @@
 function UpdateTurn(newFenArray) {
-    if (newFenArray[1] == 'w') {
+    if (newFenArray[1] === 'w') {
         newFenArray[1] = 'b';
       }
       else {

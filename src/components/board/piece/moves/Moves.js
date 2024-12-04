@@ -129,6 +129,9 @@ function PotentialMoves(squares, index, newFenArray, isJustThreaten) {
                 Castle(squares, newFenArray, potentialMoves, false)
             }
             break;
+        default:
+            console.log("Move issue with switch");
+            break;
     }
 
     return potentialMoves;

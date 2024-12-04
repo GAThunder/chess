@@ -11,7 +11,6 @@ import { PromoteModal } from '../modals/PromoteModal/PromoteModal.js';
 import { CheckPromotion } from '../Utilities/CheckPromotion/CheckPromotion.js';
 import { GameOverModal } from '../modals/GameOverModal/GameOverModal.js';
 import { ResetBoard } from '../Utilities/ResetBoard/ResetBoard.js';
-import { CurrentPoints } from '../Utilities/CurrentPoints/CurrentPoints.js';
 import { PointsBar } from '../Utilities/PointsBar/PointsBar.js';
 
 
@@ -41,6 +40,7 @@ function Chess() {
   // need 2 paths in the function, depending on if a piece is selected. 
   //The first should select the piece, and highlight valid moves, if not a valid piece, alert the player
   //the second should let the player make a valid move, and return a prompt to do so if no valid move is made, or select another valid piece.
+  //I've considered moving this into a seperate page to keep things cleaner, but it uses so many different setters I don't know if it'd be worth it.
   const selectPiece = (pieceName, index) => {
     let turn = '';
     let newSquares = CopyBoard(squares); // make a copy of the board array to update
