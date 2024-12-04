@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import classes from './Square.module.css';
+import classNames from 'classnames';
 import blackPawn from '../../../images/black_pawn.png'
 import blackKnight from '../../../images/black_knight.png';
 import blackBishop from '../../../images/black_bishop.png';
@@ -86,25 +87,12 @@ function Square(props) {
   }, [props])
 
   let backgroundColor = null;
-  //if (props.highlighted) {backgroundColor = classes.highlighted} else (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
 
-  switch (props.highlighted) {
-    case true:
-      backgroundColor = classes.highlighted
-      break;
-
-    case false:
-      (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
-      break;
-
-      default: 
-      console.log("error in square switch")
-      break;
-  }
+  (props.number % 2 === 0) ? backgroundColor = classes.white : backgroundColor = classes.black
 
   return <div key={props.piece}
     onClick={() => props.selectPiece(pieceName, props.index)}
-    className={backgroundColor}
+    className={classNames(backgroundColor, { [classes.highlighted]: props.highlighted })}
   >
     {props.piece !== '' && <img src={pieceURL} alt={pieceName} number={props.number} />}
   </div>;
