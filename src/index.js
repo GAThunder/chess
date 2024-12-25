@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Chess from './components/chess/Chess.js'
+import {Chess} from './components/chess/Chess.js'
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 

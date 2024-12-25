@@ -24,10 +24,10 @@ function Chess() {
   const [disablePromoteModal, setDisablePromoteModal] = useState(true);
   const [disableGameOverModal, setDisableGameOverModal] = useState(true);
   const [whiteBarPercentage, setWhiteBarPercentage] = useState(50);
-
   const [promotionIndex, setPromotionIndex] = useState(-1);
+  const [selectedPiece, setSelectedPiece] = useState(-1);
 
-  const [selectedPiece, setSelectedPiece] = useState(-1); // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
+  // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
   ResetBoard(startingSquares); //initializes board
 
@@ -153,5 +153,5 @@ function Chess() {
 }
 
 
-export default Chess;
+export {Chess};
 
