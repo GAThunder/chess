@@ -27,6 +27,8 @@ function Chess() {
   const [promotionIndex, setPromotionIndex] = useState(-1);
   const [selectedPiece, setSelectedPiece] = useState(-1);
 
+  //test pull
+
   // I'm going to pass two functions down to onClick. The first will be if selectedPiece is -1, and it will set the 
   // index of the piece that is selected. Highlighting that piece, and any valid moves that piece can make.
   ResetBoard(startingSquares); //initializes board
