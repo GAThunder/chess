@@ -173,7 +173,7 @@ function MovePiece(newSquares, index, selectedPiece, newFenArray) {
         SetThreatenedSquares(newSquares, whiteThreatens);
     }
 
-    if (newFenArray[2] !== '-' && newFenArray[3] !== '-') {
+    if (newFenArray[2] !== '-' || newFenArray[3] !== '-') {
         updateCastle(newSquares, newFenArray);
     }
 
