@@ -823,7 +823,5 @@ function rookCastle(newSquares, selectedPiece, index) {
 }
 
 export {
-    MoveDirectional,
-    PawnTake, PawnMoveUp, PawnMoveDown, MovePiece, Castle,
-    PotentialEnPassant, PotentialMoves
+     MovePiece, PotentialMoves
 }
