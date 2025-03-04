@@ -7,4 +7,5 @@
     border: none;
     flex-wrap: wrap;
     border: 1px solid black;
+    caret-color: transparent;
 }
